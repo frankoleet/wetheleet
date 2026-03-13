@@ -1,0 +1,2034 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Выберите раздел — Forum</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Brand palette from screenshot */
+  --green:        #2BAD72;
+  --green-hover:  #25a068;
+  --green-glow:   rgba(43,173,114,0.18);
+  --green-glow2:  rgba(43,173,114,0.08);
+
+  --bg:           #080808;   /* Черный */
+  --surface:      #272727;   /* Серый */
+  --surface2:     #303030;   /* Светло-серый */
+  --surface3:     #363636;   /* Серо-коричн. */
+  --surface4:     #505050;   /* Асфальт */
+  --signal:       #2D2D2D;   /* Сигнальный */
+  --border:       #363636;
+  --border-hover: #505050;
+
+  --text:         #FFFFFF;
+  --text-muted:   #a0a0a0;
+  --text-dim:     #606060;
+
+  /* Rounded style from the site */
+  --radius:    10px;
+  --radius-sm: 6px;
+  --radius-btn: 8px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #303030;
+  font-family: 'Manrope', sans-serif;
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding: 32px 16px 32px;
+}
+
+.page {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  background: #272727;
+  border-radius: 14px;
+  padding: 36px 32px 48px;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 36px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo-mark {
+  width: 40px;
+  height: 40px;
+  background: var(--green);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.logo-mark svg { width: 26px; height: 22px; }
+
+.page-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.3px;
+}
+
+.page-sub {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+/* Search */
+.search-wrap {
+  position: relative;
+  flex: 1;
+  max-width: 360px;
+  min-width: 200px;
+}
+
+.search-wrap svg {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  color: var(--text-dim);
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  background: var(--signal);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-btn);
+  padding: 10px 14px 10px 40px;
+  font-size: 14px;
+  font-family: 'Manrope', sans-serif;
+  color: var(--text);
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.search-input::placeholder { color: var(--text-dim); }
+
+.search-input:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px var(--green-glow2);
+}
+
+/* Selected pill */
+.selected-pill {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  background: var(--green-glow);
+  border: 1px solid rgba(43,173,114,0.35);
+  border-radius: var(--radius-btn);
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--green);
+  animation: fadeIn .2s ease;
+}
+
+.selected-pill.visible { display: flex; }
+
+.selected-pill button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--green);
+  padding: 0;
+  line-height: 1;
+  opacity: .7;
+  transition: opacity .15s;
+}
+.selected-pill button:hover { opacity: 1; }
+
+/* Section group */
+.section-group {
+  background: #232323;
+  border-radius: 12px;
+  padding: 18px 18px 14px;
+  margin-bottom: 7px;
+  border: 1px solid #2e2e2e;
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 12px;
+  padding-left: 2px;
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* Cards grid */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+/* Card */
+.card {
+  background: #2a2a2a;
+  border: 1px solid #333333;
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: background .15s, border-color .15s, transform .12s;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+}
+
+.card::before { display: none; }
+
+.card:hover {
+  background: #313131;
+  border-color: var(--surface4);
+  transform: translateY(-1px);
+}
+
+.card.selected {
+  background: #1e3329;
+  border-color: var(--green);
+}
+
+.card.hidden { display: none; }
+
+.card-icon {
+  font-size: 18px;
+  margin-bottom: 8px;
+  line-height: 1;
+}
+
+.card-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.3;
+  letter-spacing: -0.1px;
+}
+
+.card.selected .card-name { color: var(--green); }
+
+.card-check {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 18px;
+  height: 18px;
+  background: var(--green);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity .2s, transform .2s;
+}
+
+.card.selected .card-check {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.card-check svg { width: 10px; height: 10px; color: #fff; }
+
+/* Sub-panel — accordion below the grid */
+.sub-panel {
+  background: #1c1c1c;
+  border: 1px solid #2e2e2e;
+  border-radius: 10px;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height .4s cubic-bezier(0.4,0,0.2,1), opacity .25s ease, margin .3s ease;
+  margin-top: 0;
+}
+
+.sub-panel.open {
+  max-height: 1200px;
+  opacity: 1;
+  margin-top: 8px;
+}
+
+.sub-panel-inner {
+  padding: 16px 18px;
+}
+
+.sub-panel-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 12px;
+}
+
+.sub-tags-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.sub-tag {
+  flex: 0 0 auto;
+  min-width: 0;
+}
+
+@media (max-width: 700px) {
+  .sub-tags-wrap { gap: 6px; }
+}
+
+/* Level-1 tag */
+.sub-tag {
+  background: #2a2a2a;
+  border: 1px solid #383838;
+  color: var(--text-muted);
+  border-radius: 9px;
+  padding: 11px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Manrope', sans-serif;
+  cursor: pointer;
+  transition: background .15s, border-color .15s, color .15s;
+  text-align: center;
+  white-space: nowrap;
+  position: relative;
+}
+
+.sub-tag:hover {
+  background: var(--surface4);
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.sub-tag.selected-sub {
+  background: #1e3329;
+  border-color: var(--green);
+  color: var(--green);
+}
+
+/* Tag with nested children — has arrow */
+.sub-tag.has-children::after {
+  content: '▾';
+  font-size: 10px;
+  margin-left: 4px;
+  opacity: .6;
+}
+.sub-tag.has-children.child-open {
+  border-color: var(--green);
+  color: var(--green);
+  background: #1e3329;
+}
+
+/* Nested sub-group: full width row, below everything */
+.sub-children-wrap {
+  width: 100%;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height .3s cubic-bezier(0.4,0,0.2,1), opacity .2s ease, margin .25s ease;
+  margin-top: 0;
+}
+
+.sub-children-wrap.open {
+  max-height: 500px;
+  opacity: 1;
+  margin-top: 4px;
+}
+
+.sub-children-inner {
+  background: #1a1a1a;
+  border: 1px solid #2e2e2e;
+  border-radius: 9px;
+  padding: 12px 14px;
+}
+
+.sub-children-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+
+.sub-children-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.sub-child-tag {
+  flex: 0 0 auto;
+  min-width: 0;
+  background: #252525;
+  border: 1px solid #363636;
+  color: var(--text-muted);
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: 'Manrope', sans-serif;
+  cursor: pointer;
+  transition: background .15s, border-color .15s, color .15s;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.sub-child-tag:hover {
+  border-color: var(--green);
+  color: var(--green);
+  background: #1e3329;
+}
+
+.sub-child-tag.selected-child {
+  background: #1e3329;
+  border-color: var(--green);
+  color: var(--green);
+}
+
+/* card expand arrow indicator */
+.card-arrow {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 14px;
+  height: 14px;
+  color: var(--text-dim);
+  transition: transform .25s ease, color .2s;
+  display: none;
+}
+
+.card[data-has-subs] .card-arrow { display: block; }
+.card[data-has-subs].expanded .card-arrow {
+  transform: rotate(180deg);
+  color: var(--green);
+}
+
+/* Empty state */
+.empty {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 60px 20px;
+  color: var(--text-dim);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.empty svg { width: 40px; height: 40px; opacity: .3; }
+.empty.visible { display: flex; }
+
+/* CTA shared base */
+.cta-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: #1e3329;
+  border: 1px solid var(--green);
+  color: var(--green);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: opacity .25s, transform .25s, background .15s, box-shadow .2s;
+  opacity: 0;
+  pointer-events: none;
+  text-align: center;
+  font-family: 'Manrope', sans-serif;
+}
+
+.cta-btn.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.cta-btn:hover {
+  background: #24402f;
+  box-shadow: 0 0 0 1px var(--green);
+}
+
+.cta-btn:active { transform: scale(0.98); }
+
+.cta-section-name {
+  font-size: 11px;
+  font-weight: 600;
+  opacity: 0.7;
+  letter-spacing: 0.1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.cta-action {
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  letter-spacing: -0.1px;
+}
+
+/* Desktop: in header, compact */
+.cta-desktop {
+  padding: 8px 16px 9px;
+  min-width: 0;
+  max-width: 280px;
+  flex-shrink: 0;
+  transform: none;
+}
+
+.cta-desktop:not(.visible) {
+  display: none;
+}
+
+/* Mobile sticky bar — hidden on desktop */
+.cta-bar {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  /* Hide desktop CTA */
+  .cta-desktop { display: none !important; }
+
+  /* Show mobile sticky bar */
+  .cta-bar {
+    display: flex;
+    position: sticky;
+    bottom: 16px;
+    z-index: 20;
+    justify-content: center;
+    padding: 0 0 4px;
+    pointer-events: none;
+    margin-top: 16px;
+  }
+
+  .cta-btn-mobile {
+    pointer-events: all;
+    background: var(--green);
+    border: none;
+    color: #fff;
+    border-radius: 14px;
+    padding: 14px 24px 13px;
+    width: calc(100vw - 56px);
+    max-width: 420px;
+    box-shadow: 0 4px 24px rgba(43,173,114,0.32);
+    transform: translateY(14px);
+    transition: opacity .25s, transform .25s, background .15s, box-shadow .2s;
+  }
+
+  .cta-btn-mobile.visible {
+    transform: translateY(0);
+  }
+
+  .cta-btn-mobile .cta-section-name { opacity: 0.8; }
+  .cta-btn-mobile .cta-action { font-size: 14px; font-weight: 800; }
+
+  .cta-btn-mobile:hover {
+    background: var(--green-hover);
+    box-shadow: 0 8px 32px rgba(43,173,114,0.38);
+    border: none;
+  }
+}
+
+/* Game cards — icon color + glow on hover */
+.game-card .game-icon {
+  color: var(--text-dim);
+  transition: color .2s, filter .2s;
+}
+
+.game-card .game-icon svg,
+.game-card .game-icon text {
+  transition: inherit;
+}
+
+.game-card:hover .game-icon,
+.game-card.selected .game-icon {
+  color: var(--game-color);
+  filter: drop-shadow(0 0 6px var(--game-glow));
+}
+
+.game-card:hover::before {
+  background: var(--game-color) !important;
+}
+
+.game-card.selected {
+  border-color: var(--game-color) !important;
+}
+
+.game-card.selected::before {
+  background: var(--game-color) !important;
+}
+
+.game-card .card-icon {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.game-card .card-icon svg {
+  width: 100%;
+  height: 100%;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.section-group {
+  animation: fadeIn .3s ease both;
+}
+.section-group:nth-child(1) { animation-delay: .05s; }
+.section-group:nth-child(2) { animation-delay: .1s; }
+.section-group:nth-child(3) { animation-delay: .15s; }
+.section-group:nth-child(4) { animation-delay: .2s; }
+
+/* Responsive */
+@media (max-width: 1000px) {
+  .cards-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 700px) {
+  .cards-grid { grid-template-columns: repeat(2, 1fr); }
+  .header { gap: 12px; }
+  .search-wrap { max-width: 100%; min-width: 0; flex: 1 1 100%; order: 3; }
+}
+@media (max-width: 420px) {
+  .cards-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .page { padding: 24px 14px 24px; }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="header">
+    <div class="header-left">
+      <div class="logo-mark">
+        <svg viewBox="0 0 28 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Crown teeth -->
+          <path d="M5 10 L5 4 L9 8 L14 2 L19 8 L23 4 L23 10" fill="white" stroke="none"/>
+          <!-- Eye outline -->
+          <path d="M2 14 C6 8 22 8 26 14 C22 20 6 20 2 14 Z" fill="white"/>
+          <!-- Pupil -->
+          <circle cx="14" cy="14" r="3.5" fill="#2BAD72"/>
+          <!-- Iris inner -->
+          <circle cx="14" cy="14" r="1.5" fill="#1a7a4f"/>
+        </svg>
+      </div>
+      <div>
+        <div class="page-title">Выберите раздел</div>
+        <div class="page-sub">Выберите тематику для новой темы</div>
+      </div>
+    </div>
+
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input class="search-input" id="searchInput" type="text" placeholder="Поиск разделов...">
+    </div>
+
+    <!-- Desktop CTA — lives in header on PC -->
+    <button class="cta-btn cta-desktop" id="ctaBtnDesktop" onclick="confirmSelection()">
+      <span class="cta-section-name" id="ctaSectionNameDesktop">—</span>
+      <span class="cta-action">Создать тему в этом разделе →</span>
+    </button>
+  </div>
+
+  <div id="content">
+
+    <!-- ОСНОВНАЯ КАТЕГОРИЯ -->
+    <div class="section-group" data-group>
+      <div class="section-label">Основная категория</div>
+      <div class="cards-grid">
+
+        <div class="card" data-name="Халява" data-has-subs>
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon">🎁</div>
+          <div class="card-name">Халява</div>
+          <svg class="card-arrow" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+        </div>
+
+        <div class="card" data-name="Торговля" data-has-subs>
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon">🛒</div>
+          <div class="card-name">Торговля</div>
+          <svg class="card-arrow" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+        </div>
+
+        <div class="card" data-name="Работа и услуги" data-has-subs>
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon">💼</div>
+          <div class="card-name">Работа и услуги</div>
+          <svg class="card-arrow" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+        </div>
+
+        <div class="card" data-name="Арбитраж" data-has-subs>
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon">⚖️</div>
+          <div class="card-name">Арбитраж</div>
+          <svg class="card-arrow" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+        </div>
+
+      </div>
+
+      <!-- Panels OUTSIDE the grid -->
+      <div class="sub-panel" data-panel="Халява">
+        <div class="sub-panel-inner">
+          <div class="sub-panel-title">Выберите подраздел — Халява</div>
+          <div class="sub-tags-wrap">
+            <span class="sub-tag has-children" data-children="halava-rozygryshi">Розыгрыши</span>
+            <div class="sub-children-wrap" id="halava-rozygryshi">
+              <div class="sub-children-inner">
+                <div class="sub-children-label">Розыгрыши</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Розыгрыши</span>
+                  <span class="sub-child-tag">Завершённые розыгрыши</span>
+                </div>
+              </div>
+            </div>
+            <span class="sub-tag">Раздачи баз</span>
+            <span class="sub-tag">Раздачи аккаунтов, ключей</span>
+            <span class="sub-tag">Раздачи игровых предметов</span>
+            <span class="sub-tag">Раздачи прокси</span>
+            <span class="sub-tag">Раздачи логов</span>
+            <span class="sub-tag">Раздачи дедиков</span>
+            <span class="sub-tag">Подарки в соц. сетях</span>
+            <span class="sub-tag">Бесплатная накрутка</span>
+            <span class="sub-tag">Промокоды</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-panel" data-panel="Торговля">
+        <div class="sub-panel-inner">
+          <div class="sub-panel-title">Выберите подраздел — Торговля</div>
+          <div class="sub-tags-wrap">
+
+            <span class="sub-tag has-children" data-children="torg-igry">Игры</span>
+            <div class="sub-children-wrap" id="torg-igry">
+              <div class="sub-children-inner">
+                <div class="sub-children-label">Игры</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Battle.net</span>
+                  <span class="sub-child-tag">miHoYo</span>
+                  <span class="sub-child-tag">Escape from Tarkov</span>
+                  <span class="sub-child-tag">Fortnite, Epic Games</span>
+                  <span class="sub-child-tag">Minecraft</span>
+                  <span class="sub-child-tag">Origin (EA)</span>
+                  <span class="sub-child-tag">PSN</span>
+                  <span class="sub-child-tag">SAMP</span>
+                  <span class="sub-child-tag">Social Club</span>
+                  <span class="sub-child-tag">Steam</span>
+                  <span class="sub-child-tag">Roblox</span>
+                  <span class="sub-child-tag">Supercell</span>
+                  <span class="sub-child-tag">Uplay</span>
+                  <span class="sub-child-tag">Valorant</span>
+                  <span class="sub-child-tag">Warface</span>
+                  <span class="sub-child-tag">World of Tanks</span>
+                  <span class="sub-child-tag">Другие игры</span>
+                </div>
+              </div>
+            </div>
+
+            <span class="sub-tag">Соц. сети</span>
+            <span class="sub-tag">YouTube, Twitch</span>
+            <span class="sub-tag">Discord</span>
+            <span class="sub-tag">Кошельки, верификация</span>
+            <span class="sub-tag">Почты</span>
+            <span class="sub-tag">Акки с балансом, бонусами</span>
+            <span class="sub-tag">Промокоды</span>
+            <span class="sub-tag">Скрипты, боты</span>
+
+            <span class="sub-tag has-children" data-children="torg-soft">Приватный софт</span>
+            <div class="sub-children-wrap" id="torg-soft">
+              <div class="sub-children-inner">
+                <div class="sub-children-label">Приватный софт</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Вторичка софта</span>
+                </div>
+              </div>
+            </div>
+
+            <span class="sub-tag has-children" data-children="torg-cheats">Приватные читы</span>
+            <div class="sub-children-wrap" id="torg-cheats">
+              <div class="sub-children-inner">
+                <div class="sub-children-label">Приватные читы</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Читы PUBG</span>
+                  <span class="sub-child-tag">Читы CS2</span>
+                  <span class="sub-child-tag">Читы Apex Legends</span>
+                  <span class="sub-child-tag">Читы Dota 2</span>
+                  <span class="sub-child-tag">Читы Rust</span>
+                  <span class="sub-child-tag">Читы Call of Duty</span>
+                  <span class="sub-child-tag">Читы Valorant</span>
+                  <span class="sub-child-tag">Вторичка читов</span>
+                </div>
+              </div>
+            </div>
+
+            <span class="sub-tag has-children" data-children="torg-servers">Серверы, хостинги, AntiDDoS</span>
+            <div class="sub-children-wrap" id="torg-servers">
+              <div class="sub-children-inner">
+                <div class="sub-children-label">Серверы, хостинги</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Вторичка дедиков, хостингов</span>
+                </div>
+              </div>
+            </div>
+
+            <span class="sub-tag">Базы, запросы с почт</span>
+            <span class="sub-tag">Логи</span>
+            <span class="sub-tag">Вещи, техника</span>
+            <span class="sub-tag">Прокси-серверы</span>
+            <span class="sub-tag">Готовый бизнес</span>
+            <span class="sub-tag">Оценка товара</span>
+            <span class="sub-tag">Другое</span>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-panel" data-panel="Работа и услуги">
+        <div class="sub-panel-inner">
+          <div class="sub-panel-title">Выберите подраздел — Работа и услуги</div>
+          <div class="sub-tags-wrap">
+            <span class="sub-tag">Фишинг</span>
+            <span class="sub-tag">Траферы</span>
+
+            <span class="sub-tag has-children" data-children="rabota-prog">Программирование</span>
+            <div class="sub-children-wrap" id="rabota-prog">
+              <div class="sub-children-inner">
+                <div class="sub-children-label">Программирование</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Поиск исполнителей</span>
+                </div>
+              </div>
+            </div>
+
+            <span class="sub-tag has-children" data-children="rabota-nakrutka">Накрутка в соц. сетях</span>
+            <div class="sub-children-wrap" id="rabota-nakrutka">
+              <div class="sub-children-inner">
+                <div class="sub-children-label">Накрутка в соц. сетях</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Поиск исполнителей</span>
+                </div>
+              </div>
+            </div>
+
+            <span class="sub-tag">Инсталлы, крипт</span>
+            <span class="sub-tag">Хостинг, аренда магазина</span>
+            <span class="sub-tag">Чек криптовалюты</span>
+            <span class="sub-tag">Чек игрового инвентаря</span>
+
+            <span class="sub-tag has-children" data-children="rabota-logs">Чек логов, баз</span>
+            <div class="sub-children-wrap" id="rabota-logs">
+              <div class="sub-children-inner">
+                <div class="sub-children-label">Чек логов, баз</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Поиск отработчиков</span>
+                </div>
+              </div>
+            </div>
+
+            <span class="sub-tag">Вязка каналов</span>
+
+            <span class="sub-tag has-children" data-children="rabota-design">Дизайн</span>
+            <div class="sub-children-wrap" id="rabota-design">
+              <div class="sub-children-inner">
+                <div class="sub-children-label">Дизайн</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Поиск исполнителей</span>
+                </div>
+              </div>
+            </div>
+
+            <span class="sub-tag">Сигны</span>
+
+            <span class="sub-tag has-children" data-children="rabota-obmen">Обмен средств</span>
+            <div class="sub-children-wrap" id="rabota-obmen">
+              <div class="sub-children-inner">
+                <div class="sub-children-label">Обмен средств</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">P2P обмены</span>
+                </div>
+              </div>
+            </div>
+
+            <span class="sub-tag">Буст аккаунтов</span>
+            <span class="sub-tag">Пополнение баланса</span>
+            <span class="sub-tag">Шип, рефанд</span>
+
+            <span class="sub-tag has-children" data-children="rabota-ucheba">Учёба</span>
+            <div class="sub-children-wrap" id="rabota-ucheba">
+              <div class="sub-children-inner">
+                <div class="sub-children-label">Учёба</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Поиск исполнителей</span>
+                </div>
+              </div>
+            </div>
+
+            <span class="sub-tag">Озвучка</span>
+            <span class="sub-tag">Приём смс</span>
+            <span class="sub-tag">Задания за деньги</span>
+            <span class="sub-tag">Реклама</span>
+            <span class="sub-tag">Ищу работу</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-panel" data-panel="Арбитраж">
+        <div class="sub-panel-inner">
+          <div class="sub-panel-title">Выберите подраздел — Арбитраж</div>
+          <div class="sub-tags-wrap">
+            <span class="sub-tag">Решённые претензии</span>
+            <span class="sub-tag">Неоплаченные претензии</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ТЕМАТИЧЕСКАЯ КАТЕГОРИЯ -->
+    <div class="section-group" data-group>
+      <div class="section-label">Тематическая категория</div>
+      <div class="cards-grid">
+        <div class="card" data-name="Тематические вопросы">
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon">❓</div>
+          <div class="card-name">Тематические вопросы</div>
+        </div>
+        <div class="card" data-name="Спроси у ChatGPT">
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon">🤖</div>
+          <div class="card-name">Спроси у ChatGPT</div>
+        </div>
+        <div class="card" data-name="Статьи" data-has-subs>
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon">📄</div>
+          <div class="card-name">Статьи</div>
+          <svg class="card-arrow" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+        </div>
+        <div class="card" data-name="Софт" data-has-subs>
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon">🔧</div>
+          <div class="card-name">Софт</div>
+          <svg class="card-arrow" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+        </div>
+      </div>
+
+      <div class="sub-panel" data-panel="Статьи">
+        <div class="sub-panel-inner">
+          <div class="sub-panel-title">Выберите подраздел — Статьи</div>
+          <div class="sub-tags-wrap">
+            <span class="sub-tag">Способы заработка</span>
+            <span class="sub-tag">Авторские курсы</span>
+            <span class="sub-tag">Криптовалюты</span>
+            <span class="sub-tag">Социальная инженерия</span>
+            <span class="sub-tag">Безопасность</span>
+
+            <span class="sub-tag has-children" data-children="stati-smm">SMM</span>
+            <div class="sub-children-wrap" id="stati-smm">
+              <div class="sub-children-inner">
+                <div class="sub-children-label">SMM</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">SMM ВКонтакте</span>
+                  <span class="sub-child-tag">SMM Instagram</span>
+                </div>
+              </div>
+            </div>
+
+            <span class="sub-tag">Wi-Fi</span>
+            <span class="sub-tag">Вирусология</span>
+            <span class="sub-tag">Социальные сети</span>
+            <span class="sub-tag">Работа с хэшами</span>
+
+            <span class="sub-tag has-children" data-children="stati-anon">Анонимность</span>
+            <div class="sub-children-wrap" id="stati-anon">
+              <div class="sub-children-inner">
+                <div class="sub-children-label">Анонимность</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Работа с дедиками</span>
+                </div>
+              </div>
+            </div>
+
+            <span class="sub-tag">Веб уязвимости</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-panel" data-panel="Софт">
+        <div class="sub-panel-inner">
+          <div class="sub-panel-title">Выберите подраздел — Софт</div>
+          <div class="sub-tags-wrap">
+            <span class="sub-tag">Ищу софт</span>
+            <span class="sub-tag">Брут, чекеры</span>
+            <span class="sub-tag">Private Keeper, BAS, OB</span>
+            <span class="sub-tag">Прокси чекеры</span>
+            <span class="sub-tag">Работа с базами</span>
+            <span class="sub-tag">Работа с логами</span>
+            <span class="sub-tag">Парсеры</span>
+            <span class="sub-tag">Спамеры, бомберы</span>
+            <span class="sub-tag">Авторегеры</span>
+            <span class="sub-tag">Malware</span>
+            <span class="sub-tag">Крипторы</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ИГРОВАЯ КАТЕГОРИЯ -->
+    <div class="section-group" data-group>
+      <div class="section-label">Игровая категория</div>
+      <div class="cards-grid">
+
+        <!-- PUBG: yellow-orange #F5A623 -->
+        <div class="card game-card" data-name="PUBG" data-has-subs style="--game-color:#F5A623;--game-glow:rgba(245,166,35,0.18)">
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon game-icon"><svg viewBox="0 0 32 20" fill="currentColor"><text x="0" y="16" font-family="Arial Black, sans-serif" font-size="13" font-weight="900" letter-spacing="1">PUBG</text></svg></div>
+          <div class="card-name">PUBG</div>
+          <svg class="card-arrow" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+        </div>
+
+        <!-- CS2: #E8802A orange -->
+        <div class="card game-card" data-name="Counter-Strike 2" data-has-subs style="--game-color:#E8802A;--game-glow:rgba(232,128,42,0.18)">
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon game-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M5 3v18M5 12l9-9M5 12l9 9" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 3l5 4.5-5 4.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="card-name">Counter-Strike 2</div>
+          <svg class="card-arrow" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+        </div>
+
+        <!-- Dota 2: #C23B22 red -->
+        <div class="card game-card" data-name="Dota 2" data-has-subs style="--game-color:#C23B22;--game-glow:rgba(194,59,34,0.18)">
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon game-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4h5c4.4 0 7 2.7 7 8s-2.6 8-7 8H6V4z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><line x1="6" y1="4" x2="6" y2="20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+          <div class="card-name">Dota 2</div>
+          <svg class="card-arrow" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+        </div>
+
+        <!-- Overwatch: #FA9C1E amber -->
+        <div class="card game-card" data-name="Overwatch" data-has-subs style="--game-color:#FA9C1E;--game-glow:rgba(250,156,30,0.18)">
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon game-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="12" r="3" fill="currentColor"/><line x1="12" y1="2" x2="12" y2="6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><line x1="12" y1="18" x2="12" y2="22" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></div>
+          <div class="card-name">Overwatch</div>
+          <svg class="card-arrow" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+        </div>
+
+        <!-- Fortnite: #6BDFFF cyan-blue -->
+        <div class="card game-card" data-name="Fortnite" data-has-subs style="--game-color:#6BDFFF;--game-glow:rgba(107,223,255,0.18)">
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon game-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M15 3H7l-2 9h6l-2 9 10-12h-6l2-6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></div>
+          <div class="card-name">Fortnite</div>
+          <svg class="card-arrow" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+        </div>
+
+        <!-- Valorant: #FF4655 red -->
+        <div class="card game-card" data-name="Valorant" data-has-subs style="--game-color:#FF4655;--game-glow:rgba(255,70,85,0.18)">
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon game-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M3 4l9 16 9-16" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 4h6M15 4h6" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/></svg></div>
+          <div class="card-name">Valorant</div>
+          <svg class="card-arrow" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+        </div>
+
+        <!-- GTA: #009A44 green -->
+        <div class="card game-card" data-name="GTA" data-has-subs style="--game-color:#009A44;--game-glow:rgba(0,154,68,0.18)">
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon game-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M2 18h20M2 18V10l3-3v3l2-4v4l2-3v4l2-5v5l2-3v3l3-4v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="card-name">GTA</div>
+          <svg class="card-arrow" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+        </div>
+
+        <!-- WoT: #FFB800 gold -->
+        <div class="card game-card" data-name="World of Tanks" data-has-subs style="--game-color:#FFB800;--game-glow:rgba(255,184,0,0.18)">
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon game-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="11" width="16" height="7" rx="2" stroke="currentColor" stroke-width="2"/><rect x="6" y="8" width="10" height="4" rx="1" stroke="currentColor" stroke-width="1.8"/><line x1="12" y1="6" x2="20" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="6" cy="18" r="1.5" fill="currentColor"/><circle cx="18" cy="18" r="1.5" fill="currentColor"/></svg></div>
+          <div class="card-name">World of Tanks</div>
+          <svg class="card-arrow" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+        </div>
+
+        <!-- miHoYo: #4A9EFF blue -->
+        <div class="card game-card" data-name="miHoYo" data-has-subs style="--game-color:#4A9EFF;--game-glow:rgba(74,158,255,0.18)">
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon game-icon"><svg viewBox="0 0 32 18" fill="currentColor"><text x="0" y="15" font-family="Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="0.5">mi</text></svg></div>
+          <div class="card-name">miHoYo</div>
+          <svg class="card-arrow" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+        </div>
+
+        <!-- Deadlock: #57A8D6 teal-blue -->
+        <div class="card game-card" data-name="Deadlock" data-has-subs style="--game-color:#57A8D6;--game-glow:rgba(87,168,214,0.18)">
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon game-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="7" stroke="currentColor" stroke-width="2"/><line x1="12" y1="2" x2="12" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="12" y1="18" x2="12" y2="22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="12" x2="6" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="18" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/></svg></div>
+          <div class="card-name">Deadlock</div>
+          <svg class="card-arrow" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+        </div>
+
+        <!-- Survival: #7CB95A green -->
+        <div class="card game-card" data-name="Survival игры" data-has-subs style="--game-color:#7CB95A;--game-glow:rgba(124,185,90,0.18)">
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon game-icon"><svg viewBox="0 0 24 24" fill="none"><line x1="5" y1="19" x2="19" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M19 5l-5 1 4 4 1-5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M13 11c-2 2-3 4-2 5s3 0 5-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <div class="card-name">Survival игры</div>
+          <svg class="card-arrow" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+        </div>
+
+        <!-- Other games: #888 grey -->
+        <div class="card game-card" data-name="Остальные игры" data-has-subs style="--game-color:#888888;--game-glow:rgba(136,136,136,0.15)">
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon game-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="6" cy="12" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/><circle cx="18" cy="12" r="1.5" fill="currentColor"/></svg></div>
+          <div class="card-name">Остальные игры</div>
+          <svg class="card-arrow" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+        </div>
+
+      </div>
+
+      <!-- GAME SUB-PANELS -->
+      <div class="sub-panel" data-panel="PUBG">
+        <div class="sub-panel-inner">
+          <div class="sub-panel-title">Выберите подраздел — PUBG</div>
+          <div class="sub-tags-wrap">
+            <span class="sub-tag has-children" data-children="pubg-cheats">Читы PUBG</span>
+            <div class="sub-children-wrap" id="pubg-cheats">
+              <div class="sub-children-inner"><div class="sub-children-label">Читы PUBG</div>
+                <div class="sub-children-grid"><span class="sub-child-tag">Приватные читы PUBG</span></div>
+              </div>
+            </div>
+            <span class="sub-tag">Гайды PUBG</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-panel" data-panel="Counter-Strike 2">
+        <div class="sub-panel-inner">
+          <div class="sub-panel-title">Выберите подраздел — Counter-Strike 2</div>
+          <div class="sub-tags-wrap">
+            <span class="sub-tag has-children" data-children="cs2-cheats">Читы CS2</span>
+            <div class="sub-children-wrap" id="cs2-cheats">
+              <div class="sub-children-inner"><div class="sub-children-label">Читы CS2</div>
+                <div class="sub-children-grid"><span class="sub-child-tag">Приватные читы CS2</span></div>
+              </div>
+            </div>
+            <span class="sub-tag">Гайды CS2</span>
+            <span class="sub-tag">Конфиги CS2</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-panel" data-panel="Dota 2">
+        <div class="sub-panel-inner">
+          <div class="sub-panel-title">Выберите подраздел — Dota 2</div>
+          <div class="sub-tags-wrap">
+            <span class="sub-tag">Баги, скрипты для Dota 2</span>
+            <span class="sub-tag">Гайды, тактики по Dota 2</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-panel" data-panel="Overwatch">
+        <div class="sub-panel-inner">
+          <div class="sub-panel-title">Выберите подраздел — Overwatch</div>
+          <div class="sub-tags-wrap">
+            <span class="sub-tag">Гайды Overwatch</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-panel" data-panel="Fortnite">
+        <div class="sub-panel-inner">
+          <div class="sub-panel-title">Выберите подраздел — Fortnite</div>
+          <div class="sub-tags-wrap">
+            <span class="sub-tag">Читы Fortnite</span>
+            <span class="sub-tag">Гайды Fortnite</span>
+            <span class="sub-tag">Проблемы с игрой Fortnite</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-panel" data-panel="Valorant">
+        <div class="sub-panel-inner">
+          <div class="sub-panel-title">Выберите подраздел — Valorant</div>
+          <div class="sub-tags-wrap">
+            <span class="sub-tag has-children" data-children="val-cheats">Читы Valorant</span>
+            <div class="sub-children-wrap" id="val-cheats">
+              <div class="sub-children-inner"><div class="sub-children-label">Читы Valorant</div>
+                <div class="sub-children-grid"><span class="sub-child-tag">Приватные читы Valorant</span></div>
+              </div>
+            </div>
+            <span class="sub-tag">Гайды Valorant</span>
+            <span class="sub-tag">Видео Valorant</span>
+            <span class="sub-tag">Проблемы с игрой Valorant</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-panel" data-panel="GTA">
+        <div class="sub-panel-inner">
+          <div class="sub-panel-title">Выберите подраздел — GTA</div>
+          <div class="sub-tags-wrap">
+            <span class="sub-tag has-children" data-children="gta-samp">GTA SAMP</span>
+            <div class="sub-children-wrap" id="gta-samp">
+              <div class="sub-children-inner"><div class="sub-children-label">GTA SAMP</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Моды SAMP</span>
+                  <span class="sub-child-tag">Читы SAMP</span>
+                  <span class="sub-child-tag">Гайды SAMP</span>
+                  <span class="sub-child-tag">Видео SAMP</span>
+                  <span class="sub-child-tag">Проблемы с игрой SAMP</span>
+                </div>
+              </div>
+            </div>
+            <span class="sub-tag has-children" data-children="gta-v">GTA V</span>
+            <div class="sub-children-wrap" id="gta-v">
+              <div class="sub-children-inner"><div class="sub-children-label">GTA V</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Читы, баги для GTA V</span>
+                  <span class="sub-child-tag">GTA V Моды</span>
+                  <span class="sub-child-tag">Видео GTA V</span>
+                  <span class="sub-child-tag">Гайды, тактики по GTA V</span>
+                  <span class="sub-child-tag">Проблемы с игрой GTA V</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-panel" data-panel="World of Tanks">
+        <div class="sub-panel-inner">
+          <div class="sub-panel-title">Выберите подраздел — World of Tanks</div>
+          <div class="sub-tags-wrap">
+            <span class="sub-tag">Модификации World of Tanks</span>
+            <span class="sub-tag">Гайды World of Tanks</span>
+            <span class="sub-tag">Видео World of Tanks</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-panel" data-panel="miHoYo">
+        <div class="sub-panel-inner">
+          <div class="sub-panel-title">Выберите подраздел — miHoYo</div>
+          <div class="sub-tags-wrap">
+            <span class="sub-tag has-children" data-children="genshin">Genshin Impact</span>
+            <div class="sub-children-wrap" id="genshin">
+              <div class="sub-children-inner"><div class="sub-children-label">Genshin Impact</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Гайды Genshin Impact</span>
+                  <span class="sub-child-tag">Проблемы с игрой Genshin Impact</span>
+                </div>
+              </div>
+            </div>
+            <span class="sub-tag has-children" data-children="honkai">Honkai Star Rail</span>
+            <div class="sub-children-wrap" id="honkai">
+              <div class="sub-children-inner"><div class="sub-children-label">Honkai Star Rail</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Гайды Honkai Star Rail</span>
+                  <span class="sub-child-tag">Проблемы с игрой Honkai Star Rail</span>
+                </div>
+              </div>
+            </div>
+            <span class="sub-tag has-children" data-children="zenless">Zenless Zone Zero</span>
+            <div class="sub-children-wrap" id="zenless">
+              <div class="sub-children-inner"><div class="sub-children-label">Zenless Zone Zero</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Гайды Zenless Zone Zero</span>
+                  <span class="sub-child-tag">Проблемы с игрой Zenless Zone Zero</span>
+                </div>
+              </div>
+            </div>
+            <span class="sub-tag">Читы для игр miHoYo</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-panel" data-panel="Deadlock">
+        <div class="sub-panel-inner">
+          <div class="sub-panel-title">Выберите подраздел — Deadlock</div>
+          <div class="sub-tags-wrap">
+            <span class="sub-tag">Видео DeadLock</span>
+            <span class="sub-tag">Гайды DeadLock</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-panel" data-panel="Survival игры">
+        <div class="sub-panel-inner">
+          <div class="sub-panel-title">Выберите подраздел — Survival игры</div>
+          <div class="sub-tags-wrap">
+            <span class="sub-tag has-children" data-children="surv-rust">Rust</span>
+            <div class="sub-children-wrap" id="surv-rust">
+              <div class="sub-children-inner"><div class="sub-children-label">Rust</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Приватные читы Rust</span>
+                  <span class="sub-child-tag">Проблемы с игрой Rust</span>
+                  <span class="sub-child-tag">Гайды Rust</span>
+                </div>
+              </div>
+            </div>
+            <span class="sub-tag has-children" data-children="surv-dayz">DayZ</span>
+            <div class="sub-children-wrap" id="surv-dayz">
+              <div class="sub-children-inner"><div class="sub-children-label">DayZ</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Читы DayZ</span>
+                  <span class="sub-child-tag">Проблемы с игрой DayZ</span>
+                  <span class="sub-child-tag">Гайды DayZ</span>
+                </div>
+              </div>
+            </div>
+            <span class="sub-tag has-children" data-children="surv-eft">Escape from Tarkov</span>
+            <div class="sub-children-wrap" id="surv-eft">
+              <div class="sub-children-inner"><div class="sub-children-label">Escape from Tarkov</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Читы Escape from Tarkov</span>
+                  <span class="sub-child-tag">EFT: Arena</span>
+                  <span class="sub-child-tag">Гайды Escape from Tarkov</span>
+                  <span class="sub-child-tag">Проблемы с игрой Escape from Tarkov</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-panel" data-panel="Остальные игры">
+        <div class="sub-panel-inner">
+          <div class="sub-panel-title">Выберите подраздел — Остальные игры</div>
+          <div class="sub-tags-wrap">
+            <span class="sub-tag">ARC Raiders</span>
+            <span class="sub-tag has-children" data-children="other-osu">osu!</span>
+            <div class="sub-children-wrap" id="other-osu">
+              <div class="sub-children-inner"><div class="sub-children-label">osu!</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Гайды osu!</span>
+                  <span class="sub-child-tag">Карты и скины osu!</span>
+                  <span class="sub-child-tag">Проблемы с игрой osu!</span>
+                </div>
+              </div>
+            </div>
+            <span class="sub-tag has-children" data-children="other-supercell">Supercell</span>
+            <div class="sub-children-wrap" id="other-supercell">
+              <div class="sub-children-inner"><div class="sub-children-label">Supercell</div>
+                <div class="sub-children-grid"><span class="sub-child-tag">Гайды Supercell</span></div>
+              </div>
+            </div>
+            <span class="sub-tag has-children" data-children="other-fifa">FIFA</span>
+            <div class="sub-children-wrap" id="other-fifa">
+              <div class="sub-children-inner"><div class="sub-children-label">FIFA</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Гайды FIFA</span>
+                  <span class="sub-child-tag">Проблемы с игрой FIFA</span>
+                </div>
+              </div>
+            </div>
+            <span class="sub-tag">Team Fortress 2</span>
+            <span class="sub-tag has-children" data-children="other-warface">Warface</span>
+            <div class="sub-children-wrap" id="other-warface">
+              <div class="sub-children-inner"><div class="sub-children-label">Warface</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Читы Warface</span>
+                  <span class="sub-child-tag">Баги Warface</span>
+                  <span class="sub-child-tag">Гайды Warface</span>
+                  <span class="sub-child-tag">Видео Warface</span>
+                  <span class="sub-child-tag">Проблемы с игрой Warface</span>
+                </div>
+              </div>
+            </div>
+            <span class="sub-tag has-children" data-children="other-apex">Apex Legends</span>
+            <div class="sub-children-wrap" id="other-apex">
+              <div class="sub-children-inner"><div class="sub-children-label">Apex Legends</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Гайды Apex Legends</span>
+                  <span class="sub-child-tag">Читы Apex Legends</span>
+                  <span class="sub-child-tag">Проблемы с игрой Apex Legends</span>
+                  <span class="sub-child-tag">Баги, скрипты Apex Legends</span>
+                </div>
+              </div>
+            </div>
+
+            <span class="sub-tag">Dead by Daylight</span>
+
+            <span class="sub-tag has-children" data-children="other-bf">Battlefield</span>
+            <div class="sub-children-wrap" id="other-bf">
+              <div class="sub-children-inner"><div class="sub-children-label">Battlefield</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Гайды Battlefield 2042</span>
+                  <span class="sub-child-tag">Видео Battlefield 2042</span>
+                  <span class="sub-child-tag">Гайды Battlefield 6</span>
+                  <span class="sub-child-tag">Видео Battlefield 6</span>
+                  <span class="sub-child-tag">Гайды Battlefield 1</span>
+                  <span class="sub-child-tag">Видео Battlefield 1</span>
+                </div>
+              </div>
+            </div>
+
+            <span class="sub-tag">The Finals</span>
+
+            <span class="sub-tag has-children" data-children="other-cod">Call of Duty</span>
+            <div class="sub-children-wrap" id="other-cod">
+              <div class="sub-children-inner"><div class="sub-children-label">Call of Duty</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Гайды Call of Duty</span>
+                  <span class="sub-child-tag">Читы Call of Duty</span>
+                  <span class="sub-child-tag">Проблемы с игрой Call of Duty</span>
+                </div>
+              </div>
+            </div>
+
+            <span class="sub-tag has-children" data-children="other-lol">League of Legends</span>
+            <div class="sub-children-wrap" id="other-lol">
+              <div class="sub-children-inner"><div class="sub-children-label">League of Legends</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Читы, баги для League of Legends</span>
+                  <span class="sub-child-tag">Гайды, тактики по LoL</span>
+                  <span class="sub-child-tag">Видео League of Legends</span>
+                  <span class="sub-child-tag">Проблемы с игрой League of Legends</span>
+                </div>
+              </div>
+            </div>
+
+            <span class="sub-tag has-children" data-children="other-mc">Minecraft</span>
+            <div class="sub-children-wrap" id="other-mc">
+              <div class="sub-children-inner"><div class="sub-children-label">Minecraft</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Читы, баги Minecraft</span>
+                  <span class="sub-child-tag">Гайды, рецепты Minecraft</span>
+                  <span class="sub-child-tag">Моды, текстуры для Minecraft</span>
+                  <span class="sub-child-tag">Серверы Minecraft</span>
+                  <span class="sub-child-tag">Видео Minecraft</span>
+                  <span class="sub-child-tag">Проблемы с игрой Minecraft</span>
+                </div>
+              </div>
+            </div>
+
+            <span class="sub-tag has-children" data-children="other-stalker">S.T.A.L.K.E.R.</span>
+            <div class="sub-children-wrap" id="other-stalker">
+              <div class="sub-children-inner"><div class="sub-children-label">S.T.A.L.K.E.R.</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Сталкер: Тень Чернобыля</span>
+                  <span class="sub-child-tag">Сталкер: Чистое Небо</span>
+                  <span class="sub-child-tag">Сталкер: Зов припяти</span>
+                  <span class="sub-child-tag">S.T.A.L.K.E.R. 2</span>
+                </div>
+              </div>
+            </div>
+
+            <span class="sub-tag has-children" data-children="other-rl">Rocket League</span>
+            <div class="sub-children-wrap" id="other-rl">
+              <div class="sub-children-inner"><div class="sub-children-label">Rocket League</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Гайды Rocket League</span>
+                  <span class="sub-child-tag">Видео Rocket League</span>
+                </div>
+              </div>
+            </div>
+
+            <span class="sub-tag has-children" data-children="other-roblox">Roblox</span>
+            <div class="sub-children-wrap" id="other-roblox">
+              <div class="sub-children-inner"><div class="sub-children-label">Roblox</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Roblox Studio</span>
+                </div>
+              </div>
+            </div>
+
+            <span class="sub-tag">War Thunder</span>
+            <span class="sub-tag">Rainbow Six Siege</span>
+
+            <span class="sub-tag has-children" data-children="other-vr">VR игры</span>
+            <div class="sub-children-wrap" id="other-vr">
+              <div class="sub-children-inner"><div class="sub-children-label">VR игры</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Гайды по VR играм</span>
+                  <span class="sub-child-tag">Проблемы с VR играми</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ОБЩАЯ КАТЕГОРИЯ -->
+    <div class="section-group" data-group>
+      <div class="section-label">Общая категория</div>
+      <div class="cards-grid">
+
+        <div class="card" data-name="Мигранты из Telegram" data-has-subs>
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon">✈️</div>
+          <div class="card-name">Мигранты из Telegram</div>
+          <svg class="card-arrow" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+        </div>
+
+        <div class="card" data-name="Компьютеры" data-has-subs>
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon">🖥️</div>
+          <div class="card-name">Компьютеры</div>
+          <svg class="card-arrow" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+        </div>
+
+        <div class="card" data-name="Телефоны" data-has-subs>
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon">📱</div>
+          <div class="card-name">Телефоны</div>
+          <svg class="card-arrow" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+        </div>
+
+        <div class="card" data-name="Веб-разработка" data-has-subs>
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon">⚙️</div>
+          <div class="card-name">Веб-разработка</div>
+          <svg class="card-arrow" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+        </div>
+
+        <div class="card" data-name="Программирование" data-has-subs>
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon">⌨️</div>
+          <div class="card-name">Программирование</div>
+          <svg class="card-arrow" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+        </div>
+
+        <div class="card" data-name="Графика" data-has-subs>
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon">🎨</div>
+          <div class="card-name">Графика</div>
+          <svg class="card-arrow" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+        </div>
+
+        <div class="card" data-name="Жизнь форума" data-has-subs>
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon">❤️</div>
+          <div class="card-name">Жизнь форума</div>
+          <svg class="card-arrow" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+        </div>
+
+        <div class="card" data-name="Тестовый раздел">
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon">🔌</div>
+          <div class="card-name">Тестовый раздел</div>
+        </div>
+
+      </div>
+
+      <!-- GENERAL SUB-PANELS -->
+      <div class="sub-panel" data-panel="Мигранты из Telegram">
+        <div class="sub-panel-inner">
+          <div class="sub-panel-title">Выберите подраздел — Мигранты из Telegram</div>
+          <div class="sub-tags-wrap">
+            <span class="sub-tag">Аниме</span>
+            <span class="sub-tag">Кино и мультфильмы</span>
+            <span class="sub-tag">Юмор</span>
+            <span class="sub-tag">Учёба</span>
+            <span class="sub-tag">Нейросети</span>
+            <span class="sub-tag">Ваши истории</span>
+            <span class="sub-tag">Спорт</span>
+            <span class="sub-tag">Авто, мото</span>
+            <span class="sub-tag">Кулинария</span>
+            <span class="sub-tag">Слив фотографий 18+</span>
+            <span class="sub-tag">Ваше творчество</span>
+            <span class="sub-tag">Ответы ЕГЭ и ОГЭ, ЗНО 2026</span>
+            <span class="sub-tag">Психология</span>
+            <span class="sub-tag">Музыкальные утечки</span>
+            <span class="sub-tag">Конкурсы</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-panel" data-panel="Компьютеры">
+        <div class="sub-panel-inner">
+          <div class="sub-panel-title">Выберите подраздел — Компьютеры</div>
+          <div class="sub-tags-wrap">
+            <span class="sub-tag">Девайсы</span>
+            <span class="sub-tag">Windows</span>
+            <span class="sub-tag">macOS</span>
+            <span class="sub-tag">Linux</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-panel" data-panel="Телефоны">
+        <div class="sub-panel-inner">
+          <div class="sub-panel-title">Выберите подраздел — Телефоны</div>
+          <div class="sub-tags-wrap">
+            <span class="sub-tag has-children" data-children="phone-ios">iOS</span>
+            <div class="sub-children-wrap" id="phone-ios">
+              <div class="sub-children-inner"><div class="sub-children-label">iOS</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Полезное ПО</span>
+                </div>
+              </div>
+            </div>
+            <span class="sub-tag has-children" data-children="phone-android">Android</span>
+            <div class="sub-children-wrap" id="phone-android">
+              <div class="sub-children-inner"><div class="sub-children-label">Android</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Полезное ПО</span>
+                  <span class="sub-child-tag">Прошивки</span>
+                  <span class="sub-child-tag">Читы для Android игр</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-panel" data-panel="Веб-разработка">
+        <div class="sub-panel-inner">
+          <div class="sub-panel-title">Выберите подраздел — Веб-разработка</div>
+          <div class="sub-tags-wrap">
+            <span class="sub-tag has-children" data-children="web-front">Frontend</span>
+            <div class="sub-children-wrap" id="web-front">
+              <div class="sub-children-inner"><div class="sub-children-label">Frontend</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Уроки</span>
+                  <span class="sub-child-tag">HTML шаблоны, лендинги</span>
+                </div>
+              </div>
+            </div>
+            <span class="sub-tag has-children" data-children="web-back">Backend</span>
+            <div class="sub-children-wrap" id="web-back">
+              <div class="sub-children-inner"><div class="sub-children-label">Backend</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Движки, фреймворки</span>
+                  <span class="sub-child-tag">Скрипты сайтов</span>
+                </div>
+              </div>
+            </div>
+            <span class="sub-tag">Ваши сайты</span>
+            <span class="sub-tag">SEO, продвижение</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-panel" data-panel="Программирование">
+        <div class="sub-panel-inner">
+          <div class="sub-panel-title">Выберите подраздел — Программирование</div>
+          <div class="sub-tags-wrap">
+            <span class="sub-tag">Бесплатная разработка</span>
+            <span class="sub-tag">Private Keeper, BAS, OB</span>
+            <span class="sub-tag has-children" data-children="prog-reverse">Реверсинг / Assembler</span>
+            <div class="sub-children-wrap" id="prog-reverse">
+              <div class="sub-children-inner"><div class="sub-children-label">Реверсинг / Assembler</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">CrackME / UnpackME</span>
+                  <span class="sub-child-tag">Уроки реверсинга</span>
+                </div>
+              </div>
+            </div>
+            <span class="sub-tag">Софт</span>
+            <span class="sub-tag">Python</span>
+            <span class="sub-tag">JS/TS</span>
+            <span class="sub-tag">C/C++</span>
+            <span class="sub-tag">Rust</span>
+            <span class="sub-tag">C#</span>
+            <span class="sub-tag">Go</span>
+            <span class="sub-tag">1C</span>
+            <span class="sub-tag">Ваши работы</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-panel" data-panel="Графика">
+        <div class="sub-panel-inner">
+          <div class="sub-panel-title">Выберите подраздел — Графика</div>
+          <div class="sub-tags-wrap">
+            <span class="sub-tag">Бесплатная графика</span>
+            <span class="sub-tag has-children" data-children="graph-uroki">Уроки</span>
+            <div class="sub-children-wrap" id="graph-uroki">
+              <div class="sub-children-inner"><div class="sub-children-label">Уроки</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Работа с текстом</span>
+                  <span class="sub-child-tag">Уроки по анимациям</span>
+                </div>
+              </div>
+            </div>
+            <span class="sub-tag has-children" data-children="graph-res">Ресурсы</span>
+            <div class="sub-children-wrap" id="graph-res">
+              <div class="sub-children-inner"><div class="sub-children-label">Ресурсы</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Исходники</span>
+                  <span class="sub-child-tag">Шрифты</span>
+                  <span class="sub-child-tag">Кисти, текстуры, градиенты</span>
+                </div>
+              </div>
+            </div>
+            <span class="sub-tag">Ваши работы</span>
+            <span class="sub-tag">Софт для графики</span>
+            <span class="sub-tag">Дизайн</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-panel" data-panel="Жизнь форума">
+        <div class="sub-panel-inner">
+          <div class="sub-panel-title">Выберите подраздел — Жизнь форума</div>
+          <div class="sub-tags-wrap">
+            <span class="sub-tag has-children" data-children="forum-zhaloby">Жалобы</span>
+            <div class="sub-children-wrap" id="forum-zhaloby">
+              <div class="sub-children-inner"><div class="sub-children-label">Жалобы</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Платные обжалования</span>
+                  <span class="sub-child-tag">Решённые жалобы</span>
+                </div>
+              </div>
+            </div>
+            <span class="sub-tag has-children" data-children="forum-nedochet">Недочёты</span>
+            <div class="sub-children-wrap" id="forum-nedochet">
+              <div class="sub-children-inner"><div class="sub-children-label">Недочёты</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Мобильное приложение</span>
+                  <span class="sub-child-tag">Рассмотренные недочёты мобильного приложения</span>
+                  <span class="sub-child-tag">Проблемы с загрузкой аккаунтов</span>
+                  <span class="sub-child-tag">Рассмотренные недочёты</span>
+                </div>
+              </div>
+            </div>
+            <span class="sub-tag has-children" data-children="forum-predl">Предложения</span>
+            <div class="sub-children-wrap" id="forum-predl">
+              <div class="sub-children-inner"><div class="sub-children-label">Предложения</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Рассмотренные предложения</span>
+                </div>
+              </div>
+            </div>
+            <span class="sub-tag">Турниры</span>
+            <span class="sub-tag">Гайды по форуму</span>
+            <span class="sub-tag has-children" data-children="forum-qa">Вопрос — Ответ</span>
+            <div class="sub-children-wrap" id="forum-qa">
+              <div class="sub-children-inner"><div class="sub-children-label">Вопрос — Ответ</div>
+                <div class="sub-children-grid">
+                  <span class="sub-child-tag">Рассмотренные вопросы</span>
+                </div>
+              </div>
+            </div>
+            <span class="sub-tag">Новости сайта</span>
+            <span class="sub-tag">Дополнения</span>
+            <span class="sub-tag">Интервью</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ПОЛЬЗОВАТЕЛЬСКИЕ РАЗДЕЛЫ -->
+    <div class="section-group" data-group>
+      <div class="section-label">Пользовательские разделы</div>
+      <div class="cards-grid">
+
+        <div class="card" data-name="Нора Хомяка" data-has-subs>
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon">🐹</div>
+          <div class="card-name">Нора Хомяка</div>
+          <svg class="card-arrow" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+        </div>
+
+        <div class="card" data-name="babybong вещает">
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon">💬</div>
+          <div class="card-name">babybong вещает</div>
+        </div>
+
+        <div class="card" data-name="Раздел БИЛЛИ" data-has-subs>
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon">📢</div>
+          <div class="card-name">Раздел БИЛЛИ</div>
+          <svg class="card-arrow" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+        </div>
+
+        <div class="card" data-name="Анонимные темы">
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon">👻</div>
+          <div class="card-name">Анонимные темы</div>
+        </div>
+
+        <div class="card" data-name="Бункер Roblox">
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon">🎮</div>
+          <div class="card-name">Бункер Roblox</div>
+        </div>
+
+        <div class="card" data-name="HCP">
+          <div class="card-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div>
+          <div class="card-icon">🧪</div>
+          <div class="card-name">HCP</div>
+        </div>
+
+      </div>
+
+      <!-- USER SUB-PANELS -->
+      <div class="sub-panel" data-panel="Нора Хомяка">
+        <div class="sub-panel-inner">
+          <div class="sub-panel-title">Выберите подраздел — Нора Хомяка</div>
+          <div class="sub-tags-wrap">
+            <span class="sub-tag">Клуб Анонимных Хомяков</span>
+            <span class="sub-tag">Халява-Раздачи</span>
+            <span class="sub-tag">Реклама в Профиле Пользователей</span>
+            <span class="sub-tag">Нестандартные вопросы</span>
+            <span class="sub-tag">Эротика</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-panel" data-panel="Раздел БИЛЛИ">
+        <div class="sub-panel-inner">
+          <div class="sub-panel-title">Выберите подраздел — Раздел БИЛЛИ</div>
+          <div class="sub-tags-wrap">
+            <span class="sub-tag">Telegram</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div><!-- /content -->
+
+  <div class="empty" id="emptyState">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+    <span>Ничего не найдено</span>
+  </div>
+
+  <div class="cta-bar">
+    <button class="cta-btn cta-btn-mobile" id="ctaBtn" onclick="confirmSelection()">
+      <span class="cta-section-name" id="ctaSectionName">—</span>
+      <span class="cta-action">Создать тему в этом разделе →</span>
+    </button>
+  </div>
+
+</div><!-- /page -->
+
+<script>
+// ── DOM fix: move all sub-children-wrap OUT of sub-tags-wrap, place after it ──
+document.querySelectorAll('.sub-tags-wrap').forEach(wrap => {
+  const wraps = Array.from(wrap.querySelectorAll('.sub-children-wrap'));
+  wraps.forEach(cw => {
+    wrap.parentNode.insertBefore(cw, wrap.nextSibling);
+  });
+});
+
+let selectedCard = null;
+let selectedSub = null;
+
+const searchInput = document.getElementById('searchInput');
+const ctaBtnDesktop = document.getElementById('ctaBtnDesktop');
+const ctaSectionNameDesktop = document.getElementById('ctaSectionNameDesktop');
+const ctaBtn = document.getElementById('ctaBtn');
+const ctaSectionName = document.getElementById('ctaSectionName');
+const emptyState = document.getElementById('emptyState');
+const groups = document.querySelectorAll('[data-group]');
+
+function closeAllPanels(exceptName) {
+  document.querySelectorAll('.sub-panel').forEach(p => {
+    if (p.dataset.panel !== exceptName) p.classList.remove('open');
+  });
+  document.querySelectorAll('.card[data-has-subs]').forEach(c => {
+    if (c.dataset.name !== exceptName) c.classList.remove('expanded', 'selected');
+  });
+}
+
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('click', e => {
+    if (e.target.closest('.sub-tag')) return;
+
+    const name = card.dataset.name;
+    const hasSubs = card.hasAttribute('data-has-subs');
+    const panel = hasSubs ? document.querySelector(`.sub-panel[data-panel="${name}"]`) : null;
+    const isExpanded = card.classList.contains('expanded');
+
+    if (selectedCard && selectedCard !== card) {
+      selectedCard.classList.remove('selected', 'expanded');
+      const prevPanel = document.querySelector(`.sub-panel[data-panel="${selectedCard.dataset.name}"]`);
+      if (prevPanel) prevPanel.classList.remove('open');
+    }
+
+    if (hasSubs) {
+      if (isExpanded) {
+        card.classList.remove('expanded', 'selected');
+        panel.classList.remove('open');
+        selectedCard = null;
+      } else {
+        closeAllPanels(name);
+        card.classList.add('expanded', 'selected');
+        panel.classList.add('open');
+        selectedCard = card;
+      }
+      selectedSub = null;
+      document.querySelectorAll('.sub-tag').forEach(t => t.classList.remove('selected-sub', 'child-open'));
+      document.querySelectorAll('.sub-children-wrap').forEach(w => w.classList.remove('open'));
+    } else {
+      closeAllPanels(null);
+      if (card.classList.contains('selected')) {
+        card.classList.remove('selected');
+        selectedCard = null;
+      } else {
+        card.classList.add('selected');
+        selectedCard = card;
+      }
+      selectedSub = null;
+    }
+
+    updateUI();
+  });
+});
+
+document.addEventListener('click', e => {
+  const tag = e.target.closest('.sub-tag');
+  if (!tag) return;
+  e.stopPropagation();
+
+  const childrenId = tag.dataset.children;
+
+  if (childrenId) {
+    const wrap = document.getElementById(childrenId);
+    const isOpen = wrap.classList.contains('open');
+
+    // Close all other child wraps in same panel-inner
+    const panelInner = tag.closest('.sub-panel-inner');
+    panelInner.querySelectorAll('.sub-children-wrap.open').forEach(w => {
+      if (w !== wrap) {
+        w.classList.remove('open');
+        // find the tag that owns it
+        const ownerTag = panelInner.querySelector(`[data-children="${w.id}"]`);
+        if (ownerTag) ownerTag.classList.remove('child-open');
+      }
+    });
+
+    wrap.classList.toggle('open', !isOpen);
+    tag.classList.toggle('child-open', !isOpen);
+
+    document.querySelectorAll('.sub-tag').forEach(t => t.classList.remove('selected-sub'));
+    document.querySelectorAll('.sub-child-tag').forEach(t => t.classList.remove('selected-child'));
+    tag.classList.add('selected-sub');
+    selectedSub = tag.textContent.replace('▾','').trim();
+  } else {
+    const panel = tag.closest('.sub-panel');
+    if (panel) {
+      panel.querySelectorAll('.sub-children-wrap.open').forEach(w => {
+        w.classList.remove('open');
+        const ownerTag = panel.querySelector(`[data-children="${w.id}"]`);
+        if (ownerTag) ownerTag.classList.remove('child-open');
+      });
+    }
+    document.querySelectorAll('.sub-tag').forEach(t => t.classList.remove('selected-sub', 'child-open'));
+    document.querySelectorAll('.sub-child-tag').forEach(t => t.classList.remove('selected-child'));
+    tag.classList.add('selected-sub');
+    selectedSub = tag.textContent.replace('▾','').trim();
+  }
+
+  updateUI();
+});
+
+document.addEventListener('click', e => {
+  const child = e.target.closest('.sub-child-tag');
+  if (!child) return;
+  e.stopPropagation();
+  document.querySelectorAll('.sub-child-tag').forEach(t => t.classList.remove('selected-child'));
+  document.querySelectorAll('.sub-tag').forEach(t => t.classList.remove('selected-sub'));
+  child.classList.add('selected-child');
+  // Mark parent tag as selected
+  const wrap = child.closest('.sub-children-wrap');
+  if (wrap) {
+    const ownerTag = document.querySelector(`[data-children="${wrap.id}"]`);
+    if (ownerTag) ownerTag.classList.add('selected-sub');
+  }
+  selectedSub = child.textContent.trim();
+  updateUI();
+});
+
+function updateUI() {
+  const name = selectedCard ? selectedCard.dataset.name : null;
+  const display = selectedSub ? `${name} → ${selectedSub}` : name;
+  if (display) {
+    // Desktop header button
+    ctaSectionNameDesktop.textContent = display;
+    ctaBtnDesktop.classList.add('visible');
+    // Mobile sticky button
+    ctaSectionName.textContent = display;
+    ctaBtn.classList.add('visible');
+  } else {
+    ctaBtnDesktop.classList.remove('visible');
+    ctaSectionNameDesktop.textContent = '—';
+    ctaBtn.classList.remove('visible');
+    ctaSectionName.textContent = '—';
+  }
+}
+
+function clearSelection() {
+  if (selectedCard) {
+    selectedCard.classList.remove('selected', 'expanded');
+    const panel = document.querySelector(`.sub-panel[data-panel="${selectedCard.dataset.name}"]`);
+    if (panel) panel.classList.remove('open');
+    selectedCard = null;
+  }
+  selectedSub = null;
+  document.querySelectorAll('.sub-tag').forEach(t => t.classList.remove('selected-sub', 'child-open'));
+  document.querySelectorAll('.sub-children-wrap').forEach(w => w.classList.remove('open'));
+  updateUI();
+}
+
+function confirmSelection() {
+  if (!selectedCard) return;
+  const name = selectedCard.dataset.name;
+  const msg = selectedSub ? `Раздел: ${name}\nПодраздел: ${selectedSub}` : `Раздел: ${name}`;
+  alert('✅ ' + msg);
+}
+
+searchInput.addEventListener('input', () => {
+  const q = searchInput.value.trim().toLowerCase();
+  let anyVisible = false;
+  document.querySelectorAll('.card').forEach(card => {
+    const name = card.dataset.name.toLowerCase();
+    const match = !q || name.includes(q);
+    card.classList.toggle('hidden', !match);
+    if (match) anyVisible = true;
+  });
+  groups.forEach(group => {
+    const visibleCards = group.querySelectorAll('.card:not(.hidden)');
+    group.style.display = visibleCards.length ? '' : 'none';
+  });
+  emptyState.classList.toggle('visible', !anyVisible);
+});
+</script>
+</body>
+</html>
