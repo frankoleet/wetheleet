@@ -1,28 +1,18 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
+  let { subs = [], onselect } = $props();
 
-  export let subs = [];
-
-  const dispatch = createEventDispatcher();
-
-  let openChildId = null;
-  let selectedSub = null;
+  let openChildId = $state(null);
+  let selectedSub = $state(null);
 
   function selectSub(sub) {
-    if (sub.children) {
-      openChildId = openChildId === sub.name ? null : sub.name;
-      selectedSub = sub.name;
-      dispatch('select', sub.name);
-    } else {
-      openChildId = null;
-      selectedSub = sub.name;
-      dispatch('select', sub.name);
-    }
+    openChildId = openChildId === sub.name ? null : (sub.children ? sub.name : null);
+    selectedSub = sub.name;
+    onselect(sub.name);
   }
 
   function selectChild(child) {
     selectedSub = child;
-    dispatch('select', child);
+    onselect(child);
   }
 </script>
 
@@ -33,7 +23,7 @@
       class:has-children={sub.children}
       class:child-open={openChildId === sub.name}
       class:selected-sub={selectedSub === sub.name}
-      on:click={() => selectSub(sub)}
+      onclick={() => selectSub(sub)}
     >
       {sub.name}{#if sub.children}<span class="arrow">▾</span>{/if}
     </button>
@@ -51,10 +41,8 @@
               <button
                 class="sub-child-tag"
                 class:selected-child={selectedSub === child}
-                on:click={() => selectChild(child)}
-              >
-                {child}
-              </button>
+                onclick={() => selectChild(child)}
+              >{child}</button>
             {/each}
           </div>
         </div>
@@ -65,15 +53,11 @@
 
 <style>
 .sub-tags-wrap { display: flex; flex-wrap: wrap; gap: 7px; }
-
 .sub-tag {
-  flex: 0 0 auto;
-  background: #2a2a2a; border: 1px solid #383838;
-  color: #a0a0a0; border-radius: 9px;
-  padding: 11px 18px; font-size: 13px; font-weight: 600;
-  font-family: 'Manrope', sans-serif; cursor: pointer;
-  transition: background .15s, border-color .15s, color .15s;
-  white-space: nowrap;
+  flex: 0 0 auto; background: #2a2a2a; border: 1px solid #383838;
+  color: #a0a0a0; border-radius: 9px; padding: 11px 18px;
+  font-size: 13px; font-weight: 600; font-family: 'Manrope', sans-serif;
+  cursor: pointer; transition: background .15s, border-color .15s, color .15s; white-space: nowrap;
 }
 .sub-tag:hover { background: #505050; border-color: #2BAD72; color: #2BAD72; }
 .sub-tag.selected-sub, .sub-tag.child-open { background: #1e3329; border-color: #2BAD72; color: #2BAD72; }
@@ -85,18 +69,12 @@
 .sub-children-grid { display: flex; flex-wrap: wrap; gap: 6px; }
 
 .sub-child-tag {
-  flex: 0 0 auto;
-  background: #252525; border: 1px solid #363636;
-  color: #a0a0a0; border-radius: 8px;
-  padding: 10px 16px; font-size: 12px; font-weight: 600;
-  font-family: 'Manrope', sans-serif; cursor: pointer;
-  transition: background .15s, border-color .15s, color .15s;
-  white-space: nowrap;
+  flex: 0 0 auto; background: #252525; border: 1px solid #363636;
+  color: #a0a0a0; border-radius: 8px; padding: 10px 16px;
+  font-size: 12px; font-weight: 600; font-family: 'Manrope', sans-serif;
+  cursor: pointer; transition: background .15s, border-color .15s, color .15s; white-space: nowrap;
 }
 .sub-child-tag:hover, .sub-child-tag.selected-child { background: #1e3329; border-color: #2BAD72; color: #2BAD72; }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-4px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
 </style>

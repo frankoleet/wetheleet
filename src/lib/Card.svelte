@@ -1,16 +1,7 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
   import { gameIcons } from './data/sections.js';
 
-  export let card;
-  export let selected = false;
-  export let expanded = false;
-
-  const dispatch = createEventDispatcher();
-
-  function handleClick() {
-    dispatch('select', card);
-  }
+  let { card, selected = false, expanded = false, onselect } = $props();
 </script>
 
 <button
@@ -19,7 +10,7 @@
   class:selected
   class:expanded
   style={card.gameColor ? `--game-color:${card.gameColor};--game-glow:${card.gameColor}29` : ''}
-  on:click={handleClick}
+  onclick={() => onselect(card)}
   aria-pressed={selected}
 >
   <span class="card-check">
@@ -47,29 +38,20 @@
 
 <style>
 .card {
-  background: #2a2a2a;
-  border: 1px solid #333333;
-  border-radius: 10px;
-  padding: 14px 16px;
-  cursor: pointer;
+  background: #2a2a2a; border: 1px solid #333; border-radius: 10px;
+  padding: 14px 16px; cursor: pointer;
   transition: background .15s, border-color .15s, transform .12s;
-  position: relative;
-  overflow: hidden;
-  user-select: none;
-  text-align: left;
-  width: 100%;
-  font-family: 'Manrope', sans-serif;
+  position: relative; overflow: hidden; user-select: none;
+  text-align: left; width: 100%; font-family: 'Manrope', sans-serif;
 }
 .card:hover { background: #313131; border-color: #505050; transform: translateY(-1px); }
 .card.selected { background: #1e3329; border-color: #2BAD72; }
 
 .card-check {
   position: absolute; top: 10px; right: 10px;
-  width: 18px; height: 18px;
-  background: #2BAD72; border-radius: 4px;
+  width: 18px; height: 18px; background: #2BAD72; border-radius: 4px;
   display: flex; align-items: center; justify-content: center;
-  opacity: 0; transform: scale(0.5);
-  transition: opacity .2s, transform .2s;
+  opacity: 0; transform: scale(0.5); transition: opacity .2s, transform .2s;
 }
 .card.selected .card-check { opacity: 1; transform: scale(1); }
 .card-check svg { width: 10px; height: 10px; color: #fff; }
@@ -87,8 +69,8 @@
 .card.expanded .card-arrow { transform: rotate(180deg); color: #2BAD72; }
 
 .game-icon {
-  width: 28px; height: 28px;
-  display: flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; display: flex;
+  align-items: center; justify-content: center;
   color: #606060; transition: color .2s, filter .2s;
 }
 .game-card:hover .game-icon { color: var(--game-color); filter: drop-shadow(0 0 6px var(--game-glow)); }
