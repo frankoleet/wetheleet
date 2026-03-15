@@ -1,51 +1,39 @@
-# Forum Section Selector — Svelte
+# Forum Section Selector
 
-Компонент выбора раздела форума при создании темы.
+Страница выбора разделов форума на Svelte 5 и Vite.
 
 ## Структура проекта
 
-```
+```text
 forum-section-selector/
-├── index.html                  # HTML точка входа для Vite
-├── package.json
-├── vite.config.js
-├── svelte.config.js
-└── src/
-    ├── main.js                 # Точка входа JS
-    ├── App.svelte              # Корневой компонент
-    └── lib/
-        ├── SectionSelector.svelte  # Главный компонент страницы
-        ├── Card.svelte             # Компонент карточки раздела
-        ├── SubPanel.svelte         # Компонент панели подразделов
-        └── data/
-            └── sections.js         # Все данные разделов и иконок
+|-- index.html
+|-- package.json
+|-- package-lock.json
+|-- svelte.config.js
+|-- vite.config.js
+|-- vercel.json
+`-- src/
+    |-- App.svelte
+    |-- global.css
+    |-- main.js
+    `-- lib/
+        |-- ForumTopbar.svelte
+        |-- ForumTreeNode.svelte
+        |-- MobileDrilldown.svelte
+        |-- SectionSelector.svelte
+        `-- data/
+            |-- forumTree.js
+            `-- forums.json
 ```
 
-## Установка и запуск
+## Команды
 
 ```bash
-# Установить зависимости
 npm install
-
-# Запустить dev-сервер
 npm run dev
-
-# Собрать для продакшена
 npm run build
 ```
 
-## Использование компонента
+## Деплой
 
-```svelte
-<script>
-  import SectionSelector from './lib/SectionSelector.svelte';
-</script>
-
-<SectionSelector />
-```
-
-## Технологии
-
-- **Svelte 5** — реактивный UI фреймворк
-- **Vite 6** — сборщик
-- **Manrope** — шрифт (Google Fonts)
+Для Vercel уже добавлен `vercel.json`, а production-сборка создается в папке `dist/`.
