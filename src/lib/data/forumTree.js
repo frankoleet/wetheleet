@@ -18,7 +18,7 @@ const scenarioDefinitions = [
     id: 'service',
     label: 'Нужна услуга',
     hint: 'Поиск исполнителей, дизайн, программирование, реклама и другие услуги.',
-    keywords: ['услуг', 'работ', 'исполнител', 'дизайн', 'реклама', 'программирован', 'озвучк', 'задания'],
+    keywords: ['услуг', 'работ', 'исполнитель', 'дизайн', 'реклама', 'программирован', 'озвучк', 'задания'],
   },
   {
     id: 'question',
@@ -51,103 +51,6 @@ const scenarioDefinitions = [
     keywords: ['аноним', 'тест', 'жизнь форума', 'telegram', 'user', 'пользователь'],
   },
 ];
-
-const forumIcons = {
-  'Основная категория': `
-    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-      <rect x="3" y="4" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/>
-      <path d="M6 8h8M6 12h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-    </svg>
-  `,
-  'Тематическая категория': `
-    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-      <circle cx="10" cy="10" r="6.5" stroke="currentColor" stroke-width="1.6"/>
-      <path d="M10 6.5v3.2l2.1 2.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  `,
-  'Игровая категория': `
-    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-      <path d="M6 8.5c-.9 0-1.7.7-1.9 1.6l-.6 2.5c-.3 1.1.6 2.1 1.7 2.1h1.1l1.6-1.4h4.2l1.6 1.4h1.1c1.1 0 2-.9 1.7-2.1l-.6-2.5c-.2-.9-1-1.6-1.9-1.6H6Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-      <path d="M7 10.1v2.2M5.9 11.2h2.2M13.2 10.7h.1M14.8 12.2h.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-    </svg>
-  `,
-  'Общая категория': `
-    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-      <circle cx="10" cy="10" r="6.5" stroke="currentColor" stroke-width="1.6"/>
-      <path d="M3.8 10h12.4M10 3.6c1.9 1.8 2.9 4.1 2.9 6.4S11.9 14.6 10 16.4M10 3.6C8.1 5.4 7.1 7.7 7.1 10s1 4.6 2.9 6.4" stroke="currentColor" stroke-width="1.3"/>
-    </svg>
-  `,
-  'Пользовательские разделы': `
-    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-      <path d="M6.4 8.2a3.2 3.2 0 1 1 6.4 0 3.2 3.2 0 0 1-6.4 0Z" stroke="currentColor" stroke-width="1.6"/>
-      <path d="M4.7 15.6a5.4 5.4 0 0 1 10.6 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-    </svg>
-  `,
-  'Торговля': `
-    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-      <path d="M5 6.5h10l-.7 9H5.7L5 6.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-      <path d="M7.5 6.5V5a2.5 2.5 0 0 1 5 0v1.5" stroke="currentColor" stroke-width="1.6"/>
-    </svg>
-  `,
-  'Работа и услуги': `
-    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-      <path d="M4 7h12v8.5H4V7Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-      <path d="M7 7V5.8A1.8 1.8 0 0 1 8.8 4h2.4A1.8 1.8 0 0 1 13 5.8V7" stroke="currentColor" stroke-width="1.6"/>
-    </svg>
-  `,
-  'Тематические вопросы': `
-    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-      <path d="M6 7.6a4 4 0 1 1 6.2 3.3c-.9.6-1.6 1.1-1.6 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-      <circle cx="10" cy="15" r=".9" fill="currentColor"/>
-    </svg>
-  `,
-  'Статьи': `
-    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-      <path d="M6 3.8h5.6L15 7v9.2H6V3.8Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-      <path d="M11.6 3.8V7H15M8 10.4h4.4M8 13.2h5.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  `,
-  'Софт': `
-    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-      <path d="m12.8 4.1 3.1 3.1-7.4 7.4-3.4.4.4-3.4 7.3-7.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-      <path d="m11.9 5 3.1 3.1" stroke="currentColor" stroke-width="1.6"/>
-    </svg>
-  `,
-  'Программирование': `
-    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-      <path d="m7.5 6.3-3.3 3.7 3.3 3.7M12.5 6.3l3.3 3.7-3.3 3.7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  `,
-  'Веб-разработка': `
-    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-      <rect x="3.3" y="4.2" width="13.4" height="11.6" rx="2" stroke="currentColor" stroke-width="1.6"/>
-      <path d="M3.3 7.3h13.4M7.1 10.2l-1.6 1.6 1.6 1.6M12.9 10.2l1.6 1.6-1.6 1.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  `,
-  'Компьютеры': `
-    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-      <rect x="3.4" y="4" width="13.2" height="8.8" rx="1.6" stroke="currentColor" stroke-width="1.6"/>
-      <path d="M8.1 15.7h3.8M6.3 13.8h7.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-    </svg>
-  `,
-  'Телефоны': `
-    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-      <rect x="6.1" y="2.7" width="7.8" height="14.6" rx="1.8" stroke="currentColor" stroke-width="1.6"/>
-      <circle cx="10" cy="14.7" r=".8" fill="currentColor"/>
-    </svg>
-  `,
-  'Жизнь форума': `
-    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-      <path d="M10 16.2 5 11.6a3.5 3.5 0 1 1 5-4.8 3.5 3.5 0 1 1 5 4.8L10 16.2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-    </svg>
-  `,
-  fallback: `
-    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-      <circle cx="10" cy="10" r="6.3" stroke="currentColor" stroke-width="1.6"/>
-      <circle cx="10" cy="10" r="1.5" fill="currentColor"/>
-    </svg>
-  `,
-};
 
 export function normalizeText(value) {
   return `${value ?? ''}`.trim().toLowerCase();

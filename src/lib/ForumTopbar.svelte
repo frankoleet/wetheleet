@@ -1,24 +1,154 @@
 <script>
-  const navItems = [
-    { label: 'Маркет', href: '/', dot: false, caret: false },
-    { label: 'Статьи', href: '/', dot: true, caret: false },
-    { label: 'Гарант', href: '/', dot: false, caret: false },
-    { label: 'Соц. сети', href: '/', dot: false, caret: true },
-    { label: 'Другое', href: '/', dot: false, caret: true },
+  const t = {
+    market: '\u041c\u0430\u0440\u043a\u0435\u0442',
+    articles: '\u0421\u0442\u0430\u0442\u044c\u0438',
+    guarantor: '\u0413\u0430\u0440\u0430\u043d\u0442',
+    socials: '\u0421\u043e\u0446. \u0441\u0435\u0442\u0438',
+    other: '\u0414\u0440\u0443\u0433\u043e\u0435',
+    home: '\u041d\u0430 \u0433\u043b\u0430\u0432\u043d\u0443\u044e',
+    channels: '\u041a\u0430\u043d\u0430\u043b\u044b \u0438 \u0447\u0430\u0442\u044b',
+    chat: '\u0427\u0430\u0442',
+    tgChannel: 'Telegram \u043a\u0430\u043d\u0430\u043b',
+    vkGroup: '\u0413\u0440\u0443\u043f\u043f\u0430 \u0412\u041a\u043e\u043d\u0442\u0430\u043a\u0442\u0435',
+    ytChannel: 'YouTube \u043a\u0430\u043d\u0430\u043b',
+    tgChat: 'LOLZTEAM TG \u0447\u0430\u0442',
+    discord: 'Discord \u0441\u0435\u0440\u0432\u0435\u0440',
+    chronicles: '\u0425\u0420\u041e\u041d\u0418\u041a\u0418 LOLZ',
+    users: '\u041f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u0435\u043b\u0438',
+    banned: '\u0417\u0430\u0431\u043b\u043e\u043a\u0438\u0440\u043e\u0432\u0430\u043d\u043d\u044b\u0435',
+    rules: '\u041f\u0440\u0430\u0432\u0438\u043b\u0430 \u0444\u043e\u0440\u0443\u043c\u0430',
+    money: '\u041d\u0435 \u043f\u0440\u0438\u0448\u043b\u0438 \u0434\u0435\u043d\u044c\u0433\u0438?',
+    changes: '\u0418\u0437\u043c\u0435\u043d\u0435\u043d\u0438\u044f \u043d\u0430 \u0441\u0430\u0439\u0442\u0435',
+    ads: '\u0420\u0435\u043a\u043b\u0430\u043c\u0430',
+    tournaments: '\u0422\u0443\u0440\u043d\u0438\u0440\u044b',
+    charity: '\u0411\u043b\u0430\u0433\u043e\u0442\u0432\u043e\u0440\u0438\u0442\u0435\u043b\u044c\u043d\u043e\u0441\u0442\u044c',
+    about: '\u041e \u043d\u0430\u0441',
+    help: '\u041d\u0443\u0436\u043d\u0430 \u043f\u043e\u043c\u043e\u0449\u044c',
+    openMenu: '\u041e\u0442\u043a\u0440\u044b\u0442\u044c \u043c\u0435\u043d\u044e',
+    closeMenu: '\u0417\u0430\u043a\u0440\u044b\u0442\u044c \u043c\u0435\u043d\u044e',
+    mainNav: '\u041e\u0441\u043d\u043e\u0432\u043d\u0430\u044f \u043d\u0430\u0432\u0438\u0433\u0430\u0446\u0438\u044f',
+    goHome: '\u041d\u0430 \u0433\u043b\u0430\u0432\u043d\u0443\u044e',
+    siteSearch: '\u041f\u043e\u0438\u0441\u043a \u043f\u043e \u0441\u0430\u0439\u0442\u0443',
+    searchPlaceholder: '\u041f\u043e\u0438\u0441\u043a...',
+    messages: '\u0421\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u044f',
+    alerts: '\u0423\u0432\u0435\u0434\u043e\u043c\u043b\u0435\u043d\u0438\u044f',
+    profile: '\u041f\u0440\u043e\u0444\u0438\u043b\u044c \u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u0435\u043b\u044f',
+  };
+
+  const desktopNavItems = [
+    { label: t.market, href: '/', dot: false, caret: false },
+    { label: t.articles, href: '/', dot: true, caret: false },
+    { label: t.guarantor, href: '/', dot: false, caret: false },
+    { label: t.socials, href: '/', dot: false, caret: true },
+    { label: t.other, href: '/', dot: false, caret: true },
+  ];
+
+  const mobileMenuGroups = [
+    {
+      title: '',
+      items: [
+        { label: t.home, href: '/', icon: 'home' },
+        { label: t.articles, href: '/', icon: 'article' },
+        { label: t.market, href: '/', icon: 'cart' },
+        { label: t.guarantor, href: '/', icon: 'shield' },
+      ],
+    },
+    {
+      title: t.channels,
+      items: [
+        { label: t.chat, href: '/', icon: 'chat' },
+        { label: t.tgChannel, href: '/', icon: 'telegram' },
+        { label: 'LOLZTEAM LEGAL', href: '/', icon: 'telegram' },
+        { label: 'LOLZTEAM DEV BLOG', href: '/', icon: 'telegram' },
+        { label: t.vkGroup, href: '/', icon: 'vk' },
+        { label: t.ytChannel, href: '/', icon: 'youtube', active: true },
+        { label: t.tgChat, href: '/', icon: 'chat' },
+        { label: t.discord, href: '/', icon: 'discord' },
+        { label: 'LOLZ NEWS', href: '/', icon: 'telegram' },
+        { label: t.chronicles, href: '/', icon: 'telegram' },
+      ],
+    },
+    {
+      title: t.other,
+      items: [
+        { label: t.users, href: '/', icon: 'users' },
+        { label: t.banned, href: '/', icon: 'ban' },
+        { label: t.rules, href: '/', icon: 'rules' },
+        { label: t.money, href: '/', icon: 'help' },
+        { label: 'FAQ', href: '/', icon: 'faq' },
+        { label: t.changes, href: '/', icon: 'info' },
+        { label: t.ads, href: '/', icon: 'ads' },
+        { label: t.tournaments, href: '/', icon: 'trophy' },
+        { label: t.charity, href: '/', icon: 'heart' },
+        { label: t.about, href: '/', icon: 'eye' },
+        { label: t.help, href: '/', icon: 'support' },
+        { label: 'Switch to English', href: '/', icon: 'translate' },
+      ],
+    },
   ];
 
   const avatarSrc = 'https://nztcdn.com/avatar/s/1767039519/8809641.webp';
+
+  let mobileMenuOpen = $state(false);
+
+  function closeMobileMenu() {
+    mobileMenuOpen = false;
+  }
+
+  function toggleMobileMenu() {
+    mobileMenuOpen = !mobileMenuOpen;
+  }
+
+  function getMenuIcon(icon) {
+    const icons = {
+      home: `<svg viewBox="0 0 20 20" fill="none"><path d="M4.5 8.4 10 4l5.5 4.4v6.1a1 1 0 0 1-1 1h-2.8V11H8.3v4.5H5.5a1 1 0 0 1-1-1V8.4Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>`,
+      article: `<svg viewBox="0 0 20 20" fill="none"><path d="M5 3.8h6l4 4v8.4a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4.8a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M11 3.8V8h4M7 11h6M7 14h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>`,
+      cart: `<svg viewBox="0 0 20 20" fill="none"><path d="M3.5 4.6h1.8l1.4 6.4h7.3l1.4-4.9H7.1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8.3" cy="14.6" r="1.1" fill="currentColor"/><circle cx="13.9" cy="14.6" r="1.1" fill="currentColor"/></svg>`,
+      shield: `<svg viewBox="0 0 20 20" fill="none"><path d="M10 3.2 15.4 5v4.5c0 3.2-2.1 5.6-5.4 7.2-3.3-1.6-5.4-4-5.4-7.2V5L10 3.2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>`,
+      chat: `<svg viewBox="0 0 20 20" fill="none"><path d="M5.7 4.4h8.6a2 2 0 0 1 2 2v4.3a2 2 0 0 1-2 2H10l-3.4 2.7v-2.7H5.7a2 2 0 0 1-2-2V6.4a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>`,
+      telegram: `<svg viewBox="0 0 20 20" fill="none"><path d="m16.4 4.3-2 10.2c-.1.7-.6.8-1.1.5l-3.3-2.4-1.6 1.5c-.2.2-.4.4-.8.4l.3-3.4 6.2-5.6c.3-.3-.1-.4-.4-.2L6 10 2.7 9c-.7-.2-.7-.7.2-1l12.8-4.9c.6-.2.9.1.7 1.2Z" fill="currentColor"/></svg>`,
+      vk: `<svg viewBox="0 0 20 20" fill="none"><path d="M4.1 6.4c.1 3.9 2.1 6.3 5.6 6.3h.2V10c1.5 0 2.6.8 3 2.7h2.2c-.5-1.8-1.6-2.8-2.3-3.2.7-.5 1.7-1.6 1.9-3.1h-2c-.3 1.2-1.2 2.3-2.8 2.4V6.4H8V10C6.5 9.6 5.5 8.4 5.3 6.4H4.1Z" fill="currentColor"/></svg>`,
+      youtube: `<svg viewBox="0 0 20 20" fill="none"><path d="M16.2 6.4c-.2-.8-.8-1.4-1.6-1.6C13.2 4.4 10 4.4 10 4.4s-3.2 0-4.6.4c-.8.2-1.4.8-1.6 1.6C3.4 7.8 3.4 10 3.4 10s0 2.2.4 3.6c.2.8.8 1.4 1.6 1.6 1.4.4 4.6.4 4.6.4s3.2 0 4.6-.4c.8-.2 1.4-.8 1.6-1.6.4-1.4.4-3.6.4-3.6s0-2.2-.4-3.6Z" fill="currentColor"/><path d="m8.7 12.6 4-2.6-4-2.6v5.2Z" fill="#1a1a1a"/></svg>`,
+      discord: `<svg viewBox="0 0 20 20" fill="none"><path d="M13.9 5.4A11.3 11.3 0 0 0 11.4 4l-.3.7a7 7 0 0 1 2.1 1c-2-.9-4.4-.9-6.4 0a7 7 0 0 1 2.1-1L8.6 4c-.9.3-1.8.8-2.5 1.4-1.6 2.4-2 4.7-1.8 6.9A10 10 0 0 0 7.5 14l.8-1.1c-.4-.2-.8-.4-1.1-.7l.3-.2c2 .9 4.3.9 6.3 0l.3.2c-.3.3-.7.5-1.1.7l.8 1.1a10 10 0 0 0 3.2-1.7c.3-2.5-.4-4.8-1.8-6.9ZM8.2 11.5c-.6 0-1-.5-1-1.1 0-.6.4-1.1 1-1.1s1 .5 1 1.1c0 .6-.4 1.1-1 1.1Zm3.6 0c-.6 0-1-.5-1-1.1 0-.6.4-1.1 1-1.1s1 .5 1 1.1c0 .6-.4 1.1-1 1.1Z" fill="currentColor"/></svg>`,
+      users: `<svg viewBox="0 0 20 20" fill="none"><path d="M7.4 8.1a2.1 2.1 0 1 0 0-4.2 2.1 2.1 0 0 0 0 4.2Zm5.2 1a1.8 1.8 0 1 0 0-3.6 1.8 1.8 0 0 0 0 3.6ZM3.8 15a3.8 3.8 0 0 1 7.2 0M11.2 15a3 3 0 0 1 5 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`,
+      ban: `<svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="6.5" stroke="currentColor" stroke-width="1.7"/><path d="m5.8 14.2 8.4-8.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>`,
+      rules: `<svg viewBox="0 0 20 20" fill="none"><path d="m10 4.2 6 10.5H4L10 4.2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M10 7.7v3.5M10 13.2h.01" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>`,
+      help: `<svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="6.5" stroke="currentColor" stroke-width="1.7"/><path d="M8.2 8.1a2 2 0 1 1 3.2 1.6c-.9.6-1.4 1-1.4 1.9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="10" cy="13.8" r=".8" fill="currentColor"/></svg>`,
+      faq: `<svg viewBox="0 0 20 20" fill="none"><rect x="4" y="3.7" width="12" height="12.6" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M8 8h4M8 11h4M8 14h2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>`,
+      info: `<svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="6.5" stroke="currentColor" stroke-width="1.7"/><path d="M10 8.7v4M10 6.3h.01" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>`,
+      ads: `<svg viewBox="0 0 20 20" fill="none"><path d="M9 4.2a5.8 5.8 0 1 0 0 11.6 5.8 5.8 0 0 0 5.8-5.8H9V4.2Z" stroke="currentColor" stroke-width="1.7"/><path d="M11.1 4.4a5.7 5.7 0 0 1 4.5 4.5h-4.5V4.4Z" stroke="currentColor" stroke-width="1.7"/></svg>`,
+      trophy: `<svg viewBox="0 0 20 20" fill="none"><path d="M6 4.2h8v2.4a4 4 0 0 1-8 0V4.2Z" stroke="currentColor" stroke-width="1.7"/><path d="M7.4 15.8h5.2M10 10.6v5.2M4.4 5h1.6v1.2A2.8 2.8 0 0 1 3.2 9H2.8V6.6A1.6 1.6 0 0 1 4.4 5Zm11.2 0h-1.6v1.2A2.8 2.8 0 0 0 16.8 9h.4V6.6A1.6 1.6 0 0 0 15.6 5Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>`,
+      heart: `<svg viewBox="0 0 20 20" fill="none"><path d="M10 15.9 4.9 11a3.4 3.4 0 1 1 4.8-4.8L10 6.5l.3-.3A3.4 3.4 0 1 1 15.1 11L10 15.9Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>`,
+      eye: `<svg viewBox="0 0 20 20" fill="none"><path d="M2.7 10s2.6-4.5 7.3-4.5 7.3 4.5 7.3 4.5-2.6 4.5-7.3 4.5S2.7 10 2.7 10Z" stroke="currentColor" stroke-width="1.7"/><circle cx="10" cy="10" r="2.1" stroke="currentColor" stroke-width="1.7"/></svg>`,
+      support: `<svg viewBox="0 0 20 20" fill="none"><path d="M4.5 11V9.7a5.5 5.5 0 0 1 11 0V11M4.9 12.8h1.5c.6 0 1-.4 1-1V10c0-.6-.4-1-1-1H4.9c-.6 0-1 .4-1 1v1.8c0 .6.4 1 1 1Zm8.7 0h1.5c.6 0 1-.4 1-1V10c0-.6-.4-1-1-1h-1.5c-.6 0-1 .4-1 1v1.8c0 .6.4 1 1 1Zm-3.6 3h1.7a2 2 0 0 0 2-2v-.3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>`,
+      translate: `<svg viewBox="0 0 20 20" fill="none"><path d="M3.8 5.5h8.4v8.8H3.8z" stroke="currentColor" stroke-width="1.7"/><path d="M7 7.6h2M8 7.6c0 2.2-1.3 4-3 4.9M6.3 9.8c.4.9 1.1 1.8 1.9 2.4M12.2 8.3h4M14.2 6.3v6.9M12.9 11.2h2.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+    };
+
+    return icons[icon] ?? icons.info;
+  }
 </script>
 
 <header id="header" class="topbar">
   <div id="navigation" class="pageWidth withSearch">
     <div class="pageContent">
-      <nav class="navTabs" aria-label="Основная навигация">
+      <button
+        class="mobileBurger"
+        type="button"
+        aria-label={mobileMenuOpen ? t.closeMenu : t.openMenu}
+        aria-expanded={mobileMenuOpen}
+        onclick={toggleMobileMenu}
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="navTabs" aria-label={t.mainNav}>
         <div class="publicTabs">
-          <a id="lzt-logo" href="/" aria-label="На главную"></a>
+          <a id="lzt-logo" href="/" aria-label={t.goHome}></a>
 
           <ul class="blockLinksList">
-            {#each navItems as item}
+            {#each desktopNavItems as item}
               <li>
                 <a class="navLink" href={item.href}>
                   <span>{item.label}</span>
@@ -37,23 +167,23 @@
 
       <div class="account-links">
         <div id="searchBar">
-          <label class="QuickSearch" aria-label="Поиск по сайту">
+          <label class="QuickSearch" aria-label={t.siteSearch}>
             <span class="QuickSearchIcon" aria-hidden="true"></span>
-            <input class="QuickSearchQuery" type="search" placeholder="Поиск..." />
+            <input class="QuickSearchQuery" type="search" placeholder={t.searchPlaceholder} />
           </label>
         </div>
 
         <div class="visitorTabs">
-          <button class="headerIcon" type="button" aria-label="Сообщения">
+          <button class="headerIcon" type="button" aria-label={t.messages}>
             <span class="headerIcon__message" aria-hidden="true"></span>
           </button>
 
-          <button class="headerIcon headerIcon--badge" type="button" aria-label="Уведомления">
+          <button class="headerIcon headerIcon--badge" type="button" aria-label={t.alerts}>
             <span class="headerIcon__alert" aria-hidden="true"></span>
             <span class="headerIcon__badge">2</span>
           </button>
 
-          <button class="accountUsername" type="button" aria-label="Профиль пользователя">
+          <button class="accountUsername" type="button" aria-label={t.profile}>
             <span class="accountUsername__name">nevergonnadie</span>
             <span class="accountUsername__avatar">
               <img src={avatarSrc} alt="" loading="lazy" />
@@ -63,54 +193,120 @@
       </div>
     </div>
   </div>
+
+  <div class="mobileDrawer" class:mobileDrawer--open={mobileMenuOpen}>
+    <button
+      class="mobileDrawer__backdrop"
+      type="button"
+      tabindex={mobileMenuOpen ? 0 : -1}
+      aria-label={t.closeMenu}
+      onclick={closeMobileMenu}
+    ></button>
+
+    <aside class="mobileDrawer__panel" aria-hidden={!mobileMenuOpen}>
+      <div class="mobileDrawer__search">
+        <label class="mobileDrawer__searchField" aria-label={t.siteSearch}>
+          <input type="search" placeholder={t.searchPlaceholder} />
+        </label>
+      </div>
+
+      {#each mobileMenuGroups as group}
+        <section class="mobileDrawer__group">
+          {#if group.title}
+            <div class="mobileDrawer__groupTitle">
+              <span>{group.title}</span>
+            </div>
+          {/if}
+
+          <div class="mobileDrawer__items">
+            {#each group.items as item}
+              <a
+                class="mobileDrawer__item"
+                class:mobileDrawer__item--active={item.active}
+                href={item.href}
+                onclick={closeMobileMenu}
+              >
+                <span class="mobileDrawer__icon" aria-hidden="true">
+                  {@html getMenuIcon(item.icon)}
+                </span>
+                <span>{item.label}</span>
+              </a>
+            {/each}
+          </div>
+        </section>
+      {/each}
+    </aside>
+  </div>
 </header>
 
 <style>
   #header {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 44px;
+    inset: 0 0 auto;
+    height: 50px;
     z-index: 5700;
-    background-color: rgba(20, 20, 20, 0.62);
+    background-color: rgba(20, 20, 20, 0.96);
     backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
   }
 
   #navigation {
     width: 100%;
-    height: 44px;
+    height: 50px;
   }
 
   .pageContent {
     position: relative;
-    width: min(var(--page-width), calc(100% - 20px));
-    height: 44px;
+    width: min(var(--page-width), calc(100% - 24px));
+    height: 50px;
     margin: 0 auto;
     display: flex;
-    flex-direction: row;
+    align-items: center;
     justify-content: space-between;
-    overflow: hidden;
-    zoom: 1;
+    gap: 16px;
   }
 
-  .navTabs {
-    padding-left: 10px;
-    padding-right: 10px;
+  .mobileBurger {
+    display: none;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #d6d6d6;
+    place-items: center;
   }
 
-  .publicTabs {
-    float: left;
-    height: 44px;
+  .mobileBurger span {
+    display: block;
+    width: 24px;
+    height: 2.5px;
+    margin: 3px 0;
+    border-radius: 999px;
+    background: currentColor;
+  }
+
+  .navTabs,
+  .publicTabs,
+  .blockLinksList,
+  .blockLinksList li,
+  .account-links,
+  .visitorTabs {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+  }
+
+  .publicTabs,
+  .blockLinksList,
+  .blockLinksList li {
+    height: 50px;
   }
 
   #lzt-logo {
     width: 36px;
     height: 36px;
-    margin: 4px 10px 0 0;
+    margin-right: 14px;
     flex: 0 0 auto;
     background-repeat: no-repeat;
     background-size: 100%;
@@ -121,21 +317,11 @@
     margin: 0;
     padding: 0;
     list-style: none;
-    display: flex;
-    align-items: center;
-    gap: 0;
-    height: 44px;
-  }
-
-  .blockLinksList li {
-    display: flex;
-    align-items: center;
-    height: 44px;
   }
 
   .navLink {
-    min-height: 36px;
-    padding: 0 10px;
+    min-height: 50px;
+    padding: 0 12px;
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -144,6 +330,7 @@
     font-weight: 600;
     line-height: 1;
     white-space: nowrap;
+    text-decoration: none;
   }
 
   .navLink:hover,
@@ -157,14 +344,12 @@
     height: 8px;
     border-radius: 50%;
     background: #00ba78;
-    display: inline-block;
   }
 
   .arrowWidget {
     width: 10px;
     height: 10px;
     position: relative;
-    display: inline-block;
   }
 
   .arrowWidget::before {
@@ -180,32 +365,24 @@
   }
 
   .account-links {
-    overflow: hidden;
-    float: right;
-    display: flex;
-    align-items: center;
-    height: 44px;
+    height: 50px;
+    margin-left: auto;
   }
 
   #searchBar {
-    margin: 7px 20px 2px 0;
-    float: left;
-    position: relative;
-    zoom: 1;
-    font-weight: 400;
-    z-index: 52;
+    margin-right: 28px;
   }
 
   .QuickSearch {
-    width: 210px;
-    height: 30px;
-    padding: 0 12px;
+    width: 214px;
+    height: 36px;
+    padding: 0 14px;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    border-radius: 6px;
+    gap: 10px;
+    border-radius: 5px;
     background: #242424;
-    position: relative;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
   }
 
   .QuickSearchIcon {
@@ -219,7 +396,6 @@
   .QuickSearchIcon::after {
     content: '';
     position: absolute;
-    display: block;
   }
 
   .QuickSearchIcon::before {
@@ -239,7 +415,6 @@
     background: #00ba78;
     border-radius: 999px;
     transform: rotate(45deg);
-    transform-origin: center;
   }
 
   .QuickSearchQuery {
@@ -250,8 +425,6 @@
     background: transparent;
     color: #d6d6d6;
     font-size: 14px;
-    line-height: 1;
-    padding-right: 0;
   }
 
   .QuickSearchQuery::placeholder {
@@ -266,10 +439,8 @@
   }
 
   .visitorTabs {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    height: 44px;
+    gap: 16px;
+    height: 50px;
   }
 
   .headerIcon,
@@ -291,7 +462,9 @@
   .headerIcon:hover,
   .headerIcon:focus-visible,
   .accountUsername:hover,
-  .accountUsername:focus-visible {
+  .accountUsername:focus-visible,
+  .mobileBurger:hover,
+  .mobileBurger:focus-visible {
     color: #ffffff;
     outline: none;
   }
@@ -316,11 +489,11 @@
   }
 
   .headerIcon__message::before {
-    background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7.7588 2H16.2414C17.0464 1.99999 17.7107 1.99998 18.2519 2.04419C18.814 2.09012 19.3307 2.18868 19.8161 2.43598C20.5687 2.81947 21.1806 3.43139 21.5641 4.18404C21.8114 4.66937 21.91 5.18608 21.9559 5.74818C22.0001 6.28936 22.0001 6.95372 22.0001 7.75868V13.2413C22.0001 14.0463 22.0001 14.7106 21.9559 15.2518C21.91 15.8139 21.8114 16.3306 21.5641 16.816C21.1806 17.5686 20.5687 18.1805 19.8161 18.564C19.3307 18.8113 18.814 18.9099 18.2519 18.9558C17.7107 19 17.0464 19 16.2414 19H13.6838C13.0197 19 12.8263 19.0047 12.6504 19.0408C12.4738 19.0771 12.303 19.137 12.1425 19.219C11.9826 19.3007 11.8286 19.4178 11.31 19.8327L8.89688 21.7632C8.7132 21.9102 8.52597 22.06 8.36137 22.1689C8.20394 22.273 7.8987 22.4593 7.50172 22.4597C7.0449 22.4602 6.61276 22.2525 6.32778 21.8955C6.08012 21.5852 6.03492 21.2305 6.01785 21.0425C6 20.846 6.00005 20.6062 6.00009 20.371L6.0001 18.9918C5.60829 18.9789 5.27229 18.9461 4.96482 18.8637C3.58445 18.4938 2.50626 17.4156 2.13639 16.0353C1.9993 15.5236 1.99962 14.933 2.00005 14.1376L2.0001 7.7587C2.00008 6.95373 2.00007 6.28937 2.04429 5.74818C2.09022 5.18608 2.18878 4.66937 2.43607 4.18404C2.81956 3.43139 3.43149 2.81947 4.18413 2.43598C4.66947 2.18868 5.18617 2.09012 5.74827 2.04419C6.28946 1.99998 6.95383 1.99999 7.7588 2Z' fill='%23D6D6D6'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.2 5.25h7.6c3.1 0 4.95 1.85 4.95 4.95v3.1c0 3.1-1.85 4.95-4.95 4.95h-2.85l-3.55 2.9c-.5.4-1.2.05-1.2-.6v-2.3h-.35c-3.1 0-4.95-1.85-4.95-4.95v-3.1c0-3.1 1.85-4.95 4.95-4.95Z' stroke='%23D6D6D6' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E");
   }
 
   .headerIcon__alert::before {
-    background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 2.1c4.02 0 6.9 3.28 6.9 7.53v1.6c0 .23.2.53.72 1.08l.27.27c1.08 1.1 1.51 1.73 1.51 2.75 0 .44-.05.79-.27 1.2-.45.88-1.42 1.37-2.87 1.37h-1.9c-.64 2.33-2.14 3.6-4.36 3.6-2.25 0-3.75-1.3-4.37-3.67l.02.07H5.74c-1.5 0-2.47-.5-2.9-1.41-.2-.4-.24-.72-.24-1.16 0-1.02.43-1.65 1.51-2.75l.27-.27c.53-.55.72-.85.72-1.08v-1.6C5.1 5.38 7.99 2.1 12 2.1Z' fill='%23D6D6D6'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 4.1a4.8 4.8 0 0 0-4.8 4.8v2.55c0 .7-.24 1.37-.68 1.92l-1.25 1.57c-.36.45-.04 1.11.54 1.11h12.54c.58 0 .9-.66.54-1.11l-1.25-1.57a3.1 3.1 0 0 1-.68-1.92V8.9A4.8 4.8 0 0 0 12 4.1Z' stroke='%23D6D6D6' stroke-width='1.8' stroke-linejoin='round'/%3E%3Cpath d='M10.15 18.2a2 2 0 0 0 3.7 0' stroke='%23D6D6D6' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");
   }
 
   .headerIcon__badge {
@@ -343,7 +516,7 @@
   .accountUsername {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     padding: 0;
   }
 
@@ -369,6 +542,136 @@
     object-fit: cover;
   }
 
+  .mobileDrawer {
+    position: fixed;
+    inset: 50px 0 0;
+    pointer-events: none;
+    z-index: 5699;
+  }
+
+  .mobileDrawer--open {
+    pointer-events: auto;
+  }
+
+  .mobileDrawer__backdrop {
+    position: absolute;
+    inset: 0;
+    border: 0;
+    background: rgba(0, 0, 0, 0.22);
+    opacity: 0;
+    transition: opacity 0.18s ease;
+  }
+
+  .mobileDrawer--open .mobileDrawer__backdrop {
+    opacity: 1;
+  }
+
+  .mobileDrawer__panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: min(348px, calc(100vw - 42px));
+    height: calc(100dvh - 50px);
+    padding: 12px 0 16px;
+    background: #1f1f1f;
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 20px 0 40px rgba(0, 0, 0, 0.35);
+    overflow-y: auto;
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+  }
+
+  .mobileDrawer--open .mobileDrawer__panel {
+    transform: translateX(0);
+  }
+
+  .mobileDrawer__search {
+    padding: 0 14px 10px;
+  }
+
+  .mobileDrawer__searchField {
+    display: block;
+    height: 34px;
+    border-radius: 6px;
+    background: #292929;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+  }
+
+  .mobileDrawer__searchField input {
+    width: 100%;
+    height: 100%;
+    padding: 0 12px;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: #d6d6d6;
+    font-size: 14px;
+  }
+
+  .mobileDrawer__searchField input::placeholder {
+    color: #8d8d8d;
+  }
+
+  .mobileDrawer__group + .mobileDrawer__group {
+    margin-top: 6px;
+  }
+
+  .mobileDrawer__groupTitle {
+    margin: 10px 0 7px;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #7e7e7e;
+    font-size: 12px;
+    line-height: 1.2;
+  }
+
+  .mobileDrawer__groupTitle::after {
+    content: '';
+    flex: 1 1 auto;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .mobileDrawer__items {
+    display: grid;
+  }
+
+  .mobileDrawer__item {
+    min-height: 42px;
+    padding: 0 14px;
+    color: #f2f2f2;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+
+  .mobileDrawer__item:hover,
+  .mobileDrawer__item:focus-visible {
+    background: #333333;
+    outline: none;
+  }
+
+  .mobileDrawer__item--active {
+    background: #3b3939;
+  }
+
+  .mobileDrawer__icon {
+    width: 18px;
+    height: 18px;
+    color: #757575;
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+  }
+
+  .mobileDrawer__icon :global(svg) {
+    width: 18px;
+    height: 18px;
+  }
+
   @media (max-width: 980px) {
     .blockLinksList {
       display: none;
@@ -379,13 +682,31 @@
     }
   }
 
-  @media (max-width: 720px) {
+  @media (max-width: 760px) {
     .pageContent {
       width: calc(100% - 12px);
+      gap: 8px;
+    }
+
+    .mobileBurger {
+      display: grid;
+      margin-right: 4px;
+    }
+
+    .navTabs {
+      margin-right: auto;
+    }
+
+    #lzt-logo {
+      display: none;
+    }
+
+    #searchBar {
+      display: none;
     }
 
     .visitorTabs {
-      gap: 10px;
+      gap: 14px;
     }
 
     .accountUsername__name {
@@ -393,8 +714,8 @@
     }
   }
 
-  @media (max-width: 560px) {
-    #searchBar {
+  @media (min-width: 761px) {
+    .mobileDrawer {
       display: none;
     }
   }
