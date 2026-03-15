@@ -1,6 +1,9 @@
 <script>
+  import { createEventDispatcher } from 'svelte';
+
   export let subs = [];
-  export let onSelect; // (subName) => void
+
+  const dispatch = createEventDispatcher();
 
   let openChildId = null;
   let selectedSub = null;
@@ -9,16 +12,17 @@
     if (sub.children) {
       openChildId = openChildId === sub.name ? null : sub.name;
       selectedSub = sub.name;
+      dispatch('select', sub.name);
     } else {
       openChildId = null;
       selectedSub = sub.name;
-      onSelect(sub.name);
+      dispatch('select', sub.name);
     }
   }
 
-  function selectChild(child, parentName) {
+  function selectChild(child) {
     selectedSub = child;
-    onSelect(child);
+    dispatch('select', child);
   }
 </script>
 
@@ -37,118 +41,59 @@
 </div>
 
 {#if openChildId}
-  {@const activeSub = subs.find(s => s.name === openChildId)}
-  {#if activeSub?.children}
-    <div class="sub-children-wrap">
-      <div class="sub-children-inner">
-        <div class="sub-children-label">{activeSub.name}</div>
-        <div class="sub-children-grid">
-          {#each activeSub.children as child}
-            <button
-              class="sub-child-tag"
-              class:selected-child={selectedSub === child}
-              on:click={() => selectChild(child, activeSub.name)}
-            >
-              {child}
-            </button>
-          {/each}
+  {#each subs as sub}
+    {#if sub.name === openChildId && sub.children}
+      <div class="sub-children-wrap">
+        <div class="sub-children-inner">
+          <div class="sub-children-label">{sub.name}</div>
+          <div class="sub-children-grid">
+            {#each sub.children as child}
+              <button
+                class="sub-child-tag"
+                class:selected-child={selectedSub === child}
+                on:click={() => selectChild(child)}
+              >
+                {child}
+              </button>
+            {/each}
+          </div>
         </div>
       </div>
-    </div>
-  {/if}
+    {/if}
+  {/each}
 {/if}
 
 <style>
-.sub-tags-wrap {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-}
+.sub-tags-wrap { display: flex; flex-wrap: wrap; gap: 7px; }
 
 .sub-tag {
   flex: 0 0 auto;
-  background: #2a2a2a;
-  border: 1px solid #383838;
-  color: #a0a0a0;
-  border-radius: 9px;
-  padding: 11px 18px;
-  font-size: 13px;
-  font-weight: 600;
-  font-family: 'Manrope', sans-serif;
-  cursor: pointer;
+  background: #2a2a2a; border: 1px solid #383838;
+  color: #a0a0a0; border-radius: 9px;
+  padding: 11px 18px; font-size: 13px; font-weight: 600;
+  font-family: 'Manrope', sans-serif; cursor: pointer;
   transition: background .15s, border-color .15s, color .15s;
-  text-align: center;
   white-space: nowrap;
 }
+.sub-tag:hover { background: #505050; border-color: #2BAD72; color: #2BAD72; }
+.sub-tag.selected-sub, .sub-tag.child-open { background: #1e3329; border-color: #2BAD72; color: #2BAD72; }
+.arrow { margin-left: 4px; font-size: 10px; opacity: .6; }
 
-.sub-tag:hover {
-  background: #505050;
-  border-color: #2BAD72;
-  color: #2BAD72;
-}
-
-.sub-tag.selected-sub,
-.sub-tag.child-open {
-  background: #1e3329;
-  border-color: #2BAD72;
-  color: #2BAD72;
-}
-
-.arrow {
-  margin-left: 4px;
-  font-size: 10px;
-  opacity: .6;
-}
-
-.sub-children-wrap {
-  margin-top: 8px;
-  animation: fadeIn .2s ease;
-}
-
-.sub-children-inner {
-  background: #1a1a1a;
-  border: 1px solid #2e2e2e;
-  border-radius: 9px;
-  padding: 12px 14px;
-}
-
-.sub-children-label {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: #606060;
-  margin-bottom: 10px;
-}
-
-.sub-children-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
+.sub-children-wrap { margin-top: 8px; animation: fadeIn .2s ease; }
+.sub-children-inner { background: #1a1a1a; border: 1px solid #2e2e2e; border-radius: 9px; padding: 12px 14px; }
+.sub-children-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #606060; margin-bottom: 10px; }
+.sub-children-grid { display: flex; flex-wrap: wrap; gap: 6px; }
 
 .sub-child-tag {
   flex: 0 0 auto;
-  background: #252525;
-  border: 1px solid #363636;
-  color: #a0a0a0;
-  border-radius: 8px;
-  padding: 10px 16px;
-  font-size: 12px;
-  font-weight: 600;
-  font-family: 'Manrope', sans-serif;
-  cursor: pointer;
+  background: #252525; border: 1px solid #363636;
+  color: #a0a0a0; border-radius: 8px;
+  padding: 10px 16px; font-size: 12px; font-weight: 600;
+  font-family: 'Manrope', sans-serif; cursor: pointer;
   transition: background .15s, border-color .15s, color .15s;
-  text-align: center;
   white-space: nowrap;
 }
-
-.sub-child-tag:hover,
-.sub-child-tag.selected-child {
-  background: #1e3329;
-  border-color: #2BAD72;
-  color: #2BAD72;
-}
+.sub-child-tag:hover, .sub-child-tag.selected-child { background: #1e3329; border-color: #2BAD72; color: #2BAD72; }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-4px); }

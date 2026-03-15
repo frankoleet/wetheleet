@@ -129,7 +129,7 @@
               {card}
               selected={selectedCard?.cardName === card.name}
               expanded={expandedCard === card.name}
-              onClick={() => handleCardClick(card)}
+              on:select={(e) => handleCardClick(e.detail)}
             />
           {/each}
         </div>
@@ -142,7 +142,7 @@
                 <div class="sub-panel-title">Выберите подраздел — {card.name}</div>
                 <SubPanel
                   subs={card.subs}
-                  onSelect={handleSubSelect}
+                  on:select={(e) => handleSubSelect(e.detail)}
                 />
               </div>
             </div>
