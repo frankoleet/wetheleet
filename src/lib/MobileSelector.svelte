@@ -113,11 +113,28 @@
     border: 0;
     border-radius: 8px;
     background: #242424;
-    color: #f2f2f2;
+    background-position: center;
+    color: #d6d6d6;
     display: grid;
     place-items: center start;
     text-align: left;
     font-size: 14px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.8s;
+    cursor: pointer;
+    user-select: none;
+    -webkit-appearance: none;
+  }
+
+  .mobile-categories button:active {
+    background: #323232 radial-gradient(circle, transparent 1%, #323232 1%) center/15000%;
+  }
+
+  .mobile-categories button:active {
+    background-color: #3a3a3a;
+    background-size: 100%;
+    transition: background 0s;
   }
 
   .mobile-categories button:hover,
@@ -135,6 +152,10 @@
     font-size: 14px;
     line-height: 1.2;
     font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
   }
 
   .mobile-tree-panel {
@@ -155,7 +176,7 @@
 
   .mobile-tree-panel .panel-head h2 {
     margin: 0;
-    color: var(--text-secondary);
+    color: #d6d6d6;
     font-size: 16px;
     font-weight: 700;
     line-height: 1.15;
@@ -163,7 +184,7 @@
 
   .mobile-tree-panel .panel-head > span {
     min-width: 24px;
-    color: var(--text-muted);
+    color: #949494;
     font-size: 12px;
     font-weight: 700;
     text-align: right;
@@ -171,7 +192,7 @@
 
   .mobile-tree-panel__lead {
     margin: 0;
-    color: var(--text-muted);
+    color: #949494;
     font-size: 14px;
     line-height: 1.45;
   }
@@ -205,7 +226,7 @@
   }
 
   .search-empty strong {
-    color: #ffffff;
+    color: #d6d6d6;
   }
 
   .search-empty span {

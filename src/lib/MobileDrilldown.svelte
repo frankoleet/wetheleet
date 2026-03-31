@@ -77,6 +77,7 @@
 
   .mobile-drilldown__head h2 {
     margin: 0 0 6px;
+    color: #d6d6d6;
     font-size: 16px;
     line-height: 1.2;
   }
@@ -100,7 +101,7 @@
     border: 0;
     border-radius: 8px;
     background: #303030;
-    color: #d9d9d9;
+    color: #d6d6d6;
     font-size: 13px;
     font-weight: 600;
   }
@@ -116,7 +117,7 @@
     border: 0;
     border-radius: 10px;
     background: #242424;
-    color: #fff;
+    color: #d6d6d6;
     display: flex;
     align-items: center;
     gap: 10px;

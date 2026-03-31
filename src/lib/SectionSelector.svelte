@@ -339,25 +339,22 @@
 
     <section class="workspace">
       <aside class="category-panel">
-        <div class="panel-head">
-          <div>
-            <h2>{t.forumSections}</h2>
+        <div class="category-extra">
+          <div class="category-extra__title">{t.forumSections}</div>
+          <div class="category-list">
+            {#each forumTree as category (category.id)}
+              <button
+                class="category-item"
+                class:category-item--active={!searchQuery.trim() && Boolean(selectedId) && activeCategoryId === category.id}
+                type="button"
+                onclick={() => pickCategory(category.id)}
+              >
+                <span class="category-item__copy">
+                  <strong>{category.title}</strong>
+                </span>
+              </button>
+            {/each}
           </div>
-        </div>
-
-        <div class="category-list">
-          {#each forumTree as category (category.id)}
-            <button
-              class="category-item"
-              class:category-item--active={!searchQuery.trim() && Boolean(selectedId) && activeCategoryId === category.id}
-              type="button"
-              onclick={() => pickCategory(category.id)}
-            >
-              <span class="category-item__copy">
-                <strong>{category.title}</strong>
-              </span>
-            </button>
-          {/each}
         </div>
 
         {#if adminForums.length}
@@ -527,7 +524,7 @@
 <style>
   .shell {
     min-height: 100vh;
-    background: var(--surface-app);
+    background: #141414;
   }
 
   .page {
@@ -544,37 +541,61 @@
   .mobile-page__summary,
   .mobile-selector {
     border: 0;
-    background: var(--surface-panel);
+    background: #1c1c1c;
     border-radius: 10px;
   }
 
   .page-head {
     margin-bottom: 12px;
     background: transparent;
+    overflow: hidden;
+    position: relative;
   }
 
   .breadcrumbs {
-    margin-bottom: 13px;
+    margin: 8px 0 0;
+    padding: 0;
+    width: 100%;
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    flex-wrap: nowrap;
+    gap: 6px;
     align-items: center;
-    color: #f5f5f5;
+    color: #d6d6d6;
     font-size: 16px;
-    line-height: 1.23;
+    font-family: -apple-system, BlinkMacSystemFont, 'Open Sans', Helvetica Neue, sans-serif;
+    line-height: 1.28;
+    word-wrap: break-word;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: auto;
+    overflow-y: hidden;
+    position: relative;
+    clear: both;
+    box-sizing: border-box;
+    white-space: nowrap;
+    zoom: 1;
+  }
+
+  .breadcrumbs::-webkit-scrollbar {
+    height: 0;
+    display: none;
   }
 
   .breadcrumbs a {
-    color: #f0f0f0;
+    color: #d6d6d6;
     text-decoration: none;
   }
 
+  .breadcrumbs a:hover {
+    color: #d6d6d6;
+  }
+
   .breadcrumbs span {
-    color: #f0f0f0;
+    color: #d6d6d6;
   }
 
   .breadcrumbs strong {
-    color: var(--accent);
+    color: #00ba78;
     font-weight: 400;
   }
 
@@ -585,13 +606,14 @@
   }
 
   .page-head__topic {
-    padding: 18px;
-    border-radius: 10px;
-    background: var(--surface-panel);
+    margin-top: 13px;
+    padding: 15px 20px;
+    border-radius: 10px 10px 0 0;
+    background: #1c1c1c;
   }
 
   .page-head__topic h1 {
-    color: var(--text-primary);
+    color: #d6d6d6;
     font-size: 18px;
     line-height: 1.2;
     font-weight: 700;
@@ -599,13 +621,13 @@
 
   .page-head__topic-meta {
     margin-top: 8px;
-    color: var(--text-muted);
+    color: #949494;
     font-size: 15px;
     line-height: 1.45;
   }
 
   .page-head__topic-meta strong {
-    color: var(--accent);
+    color: #00ba78;
     font-weight: 400;
   }
 
@@ -624,7 +646,7 @@
     border: 1px solid #303030;
     border-radius: 10px;
     background: #242424;
-    color: var(--accent);
+    color: #00ba78;
   }
 
   .selector-search svg,
@@ -642,7 +664,7 @@
     border: 0;
     outline: none;
     background: transparent;
-    color: var(--text-secondary);
+    color: #d6d6d6;
     font-size: 14px;
     line-height: 1.2;
   }
@@ -656,7 +678,7 @@
     height: 18px;
     border: 0;
     background: transparent;
-    color: var(--text-muted);
+    color: #949494;
     font-size: 18px;
     line-height: 1;
   }
@@ -693,7 +715,7 @@
   }
 
   .panel-head h2 {
-    color: var(--text-secondary);
+    color: #d6d6d6;
     font-size: 16px;
     font-weight: 700;
     line-height: 1.15;
@@ -701,7 +723,7 @@
 
   .panel-head > span {
     min-width: 24px;
-    color: var(--text-muted);
+    color: #949494;
     font-size: 12px;
     font-weight: 700;
     text-align: right;
@@ -713,11 +735,15 @@
   }
 
   .category-extra {
+    margin-top: 0;
+  }
+
+  .category-extra + .category-extra {
     margin-top: 16px;
   }
 
   .category-extra__title {
-    margin: 0 0 8px;
+    margin: 0 0 12px;
     color: #949494;
     font-size: 14px;
     font-weight: 700;
@@ -729,7 +755,7 @@
     border: 0;
     border-radius: 8px;
     background: transparent;
-    color: #ffffff;
+    color: #d6d6d6;
     display: grid;
     place-items: center start;
     text-align: left;
@@ -755,7 +781,7 @@
 
   .tree-panel__lead {
     margin: -2px 0 14px;
-    color: var(--text-muted);
+    color: #949494;
     font-size: 15px;
     line-height: 1.45;
   }
@@ -789,7 +815,7 @@
   }
 
   .search-empty strong {
-    color: #ffffff;
+    color: #d6d6d6;
   }
 
   .search-empty span {
@@ -807,14 +833,14 @@
   }
 
   .action-panel__box strong {
-    color: var(--text-primary);
+    color: #d6d6d6;
     font-size: 16px;
     font-weight: 700;
     line-height: 1.2;
   }
 
   .action-panel__box p {
-    color: var(--text-muted);
+    color: #949494;
     font-size: 15px;
     line-height: 1.45;
   }
@@ -835,7 +861,7 @@
 
   .action-panel__slash,
   .action-panel__path-empty {
-    color: var(--text-muted);
+    color: #949494;
   }
 
   .action-panel__cta {
@@ -886,13 +912,16 @@
   }
 
   .mobile-page__summary {
-    padding: 18px 16px;
-    color: #f1f1f1;
+    padding: 18px 20px;
+    color: #d6d6d6;
     font-size: 15px;
     line-height: 1.32;
     font-weight: 700;
     border-radius: 8px;
-    background: #1f1f1f;
+    background: #1c1c1c;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   @keyframes shimmer {
@@ -917,7 +946,7 @@
 
   @media (max-width: 760px) {
     .page {
-      width: calc(100% - 16px);
+      width: 100%;
       padding-top: 58px;
       padding-bottom: 116px;
     }
@@ -931,13 +960,45 @@
     .mobile-page {
       display: grid;
       gap: 12px;
+      padding: 0 8px;
     }
 
     .breadcrumbs--mobile {
-      margin-bottom: 0;
-      padding: 0;
-      font-size: 14px;
-      line-height: 1.3;
+      margin: 8px auto 8px;
+      padding: 0 20px;
+      width: 100%;
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 6px;
+      font-size: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Open Sans', Helvetica Neue, sans-serif;
+      line-height: 1.28;
+      word-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: auto;
+      overflow-y: hidden;
+      white-space: nowrap;
+      position: relative;
+      clear: both;
+      box-sizing: border-box;
+      zoom: 1;
+    }
+
+    .breadcrumbs--mobile::-webkit-scrollbar {
+      height: 0;
+      display: none;
+    }
+
+    .breadcrumbs--mobile::-webkit-scrollbar {
+      height: 0;
+      display: none;
+    }
+
+    .mobile-page {
+      display: grid;
+      gap: 12px;
+      padding: 0 12px;
     }
 
     .mobile-selector {
@@ -947,8 +1008,8 @@
 
     .mobile-cta {
       position: fixed;
-      left: 10px;
-      right: 10px;
+      left: 12px;
+      right: 12px;
       bottom: 10px;
       z-index: 50;
       padding: 12px;
@@ -975,6 +1036,13 @@
       white-space: nowrap;
     }
 
+    .mobile-cta__copy strong {
+      color: #d6d6d6;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.25;
+    }
+
     .mobile-cta__copy span {
       color: #848484;
       font-size: 12px;
@@ -987,13 +1055,27 @@
       padding: 0 14px;
       border: 0;
       border-radius: 8px;
-      color: #fff;
+      color: #d6d6d6;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       text-decoration: none;
       font-size: 14px;
       font-weight: 600;
+      position: relative;
+      overflow: hidden;
+      background-position: center;
+      transition: background 0.8s;
+      cursor: pointer;
+      user-select: none;
+      -webkit-appearance: none;
+    }
+
+    .mobile-cta a:active,
+    .mobile-cta button:active {
+      background-color: #3a3a3a;
+      background-size: 100%;
+      transition: background 0s;
     }
 
     .mobile-cta a {

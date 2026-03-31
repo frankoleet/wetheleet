@@ -133,6 +133,7 @@
     <div class="pageContent">
       <button
         class="mobileBurger"
+        class:mobileBurger--hidden={mobileMenuOpen}
         type="button"
         aria-label={mobileMenuOpen ? t.closeMenu : t.openMenu}
         aria-expanded={mobileMenuOpen}
@@ -163,17 +164,19 @@
             {/each}
           </ul>
         </div>
-      </nav>
 
-      <div class="account-links">
-        <div id="searchBar">
-          <label class="QuickSearch" aria-label={t.siteSearch}>
-            <span class="QuickSearchIcon" aria-hidden="true"></span>
-            <input class="QuickSearchQuery" type="search" placeholder={t.searchPlaceholder} />
-          </label>
-        </div>
+        <div class="account-links-wrapper">
+          <div id="searchBar">
+            <label class="QuickSearch" aria-label={t.siteSearch}>
+              <svg class="QuickSearchIcon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <circle cx="9" cy="9" r="5.4" stroke="currentColor" stroke-width="1.8" />
+                <path d="m13.1 13.1 3.9 3.9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+              </svg>
+              <input class="QuickSearchQuery" type="search" placeholder={t.searchPlaceholder} />
+            </label>
+          </div>
 
-        <div class="visitorTabs">
+          <div class="visitorTabs">
           <button class="headerIcon" type="button" aria-label={t.messages}>
             <span class="headerIcon__message" aria-hidden="true"></span>
           </button>
@@ -190,19 +193,12 @@
             </span>
           </button>
         </div>
-      </div>
+        </div>
+      </nav>
     </div>
   </div>
 
   <div class="mobileDrawer" class:mobileDrawer--open={mobileMenuOpen}>
-    <button
-      class="mobileDrawer__backdrop"
-      type="button"
-      tabindex={mobileMenuOpen ? 0 : -1}
-      aria-label={t.closeMenu}
-      onclick={closeMobileMenu}
-    ></button>
-
     <aside class="mobileDrawer__panel" aria-hidden={!mobileMenuOpen}>
       <div class="mobileDrawer__search">
         <label class="mobileDrawer__searchField" aria-label={t.siteSearch}>
@@ -236,6 +232,14 @@
         </section>
       {/each}
     </aside>
+
+    <button
+      class="mobileDrawer__backdrop"
+      type="button"
+      tabindex={mobileMenuOpen ? 0 : -1}
+      aria-label={t.closeMenu}
+      onclick={closeMobileMenu}
+    ></button>
   </div>
 </header>
 
@@ -243,23 +247,22 @@
   #header {
     position: fixed;
     inset: 0 0 auto;
-    height: 50px;
+    height: 44px;
     z-index: 5700;
-    background-color: rgba(20, 20, 20, 0.96);
+    background-color: rgba(20, 20, 20, 0.62);
     backdrop-filter: blur(10px);
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
     border-bottom: 1px solid rgba(255, 255, 255, 0.04);
   }
 
   #navigation {
     width: 100%;
-    height: 50px;
+    height: 44px;
   }
 
   .pageContent {
     position: relative;
     width: min(var(--page-width), calc(100% - 24px));
-    height: 50px;
+    height: 44px;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -269,38 +272,59 @@
 
   .mobileBurger {
     display: none;
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 21px;
     padding: 0;
     border: 0;
     background: transparent;
-    color: #d6d6d6;
-    place-items: center;
+    color: #949494;
+    position: relative;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    z-index: 5700;
+  }
+
+  .mobileBurger--hidden {
+    opacity: 0;
+    pointer-events: none;
   }
 
   .mobileBurger span {
     display: block;
-    width: 24px;
-    height: 2.5px;
-    margin: 3px 0;
-    border-radius: 999px;
+    width: 100%;
+    height: 3px;
+    border-radius: 2px;
     background: currentColor;
+    position: relative;
   }
 
   .navTabs,
   .publicTabs,
   .blockLinksList,
   .blockLinksList li,
-  .account-links,
+  .account-links-wrapper,
   .visitorTabs {
     display: flex;
     align-items: center;
   }
 
+  .navTabs {
+    flex: 1;
+    justify-content: space-between;
+  }
+
+  .account-links-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
   .publicTabs,
   .blockLinksList,
   .blockLinksList li {
-    height: 50px;
+    height: 44px;
   }
 
   #lzt-logo {
@@ -320,7 +344,7 @@
   }
 
   .navLink {
-    min-height: 50px;
+    min-height: 44px;
     padding: 0 12px;
     display: inline-flex;
     align-items: center;
@@ -364,67 +388,37 @@
     transform: rotate(45deg);
   }
 
-  .account-links {
-    height: 50px;
-    margin-left: auto;
-  }
-
-  #searchBar {
-    margin-right: 28px;
-  }
-
   .QuickSearch {
-    width: 214px;
-    height: 36px;
-    padding: 0 14px;
+    width: 200px;
+    height: 30px;
+    padding: 0 10px 0 12px;
     display: inline-flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     border-radius: 5px;
     background: #242424;
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
   }
 
   .QuickSearchIcon {
-    width: 16px;
-    height: 16px;
-    position: relative;
+    width: 18px;
+    height: 18px;
+    margin-left: 0;
     flex: 0 0 auto;
-  }
-
-  .QuickSearchIcon::before,
-  .QuickSearchIcon::after {
-    content: '';
-    position: absolute;
-  }
-
-  .QuickSearchIcon::before {
-    top: 1px;
-    left: 1px;
-    width: 9px;
-    height: 9px;
-    border: 2px solid #00ba78;
-    border-radius: 50%;
-  }
-
-  .QuickSearchIcon::after {
-    width: 6px;
-    height: 2px;
-    right: 0;
-    bottom: 1px;
-    background: #00ba78;
-    border-radius: 999px;
-    transform: rotate(45deg);
+    color: #00ba78;
   }
 
   .QuickSearchQuery {
     width: 100%;
     min-width: 0;
+    padding: 0;
     border: 0;
     outline: none;
     background: transparent;
     color: #d6d6d6;
     font-size: 14px;
+    font-weight: 400;
+    line-height: 1.28;
   }
 
   .QuickSearchQuery::placeholder {
@@ -440,7 +434,7 @@
 
   .visitorTabs {
     gap: 16px;
-    height: 50px;
+    height: 44px;
   }
 
   .headerIcon,
@@ -451,8 +445,8 @@
   }
 
   .headerIcon {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     position: relative;
     display: inline-grid;
     place-items: center;
@@ -471,8 +465,8 @@
 
   .headerIcon__message,
   .headerIcon__alert {
-    width: 18px;
-    height: 18px;
+    width: 22px;
+    height: 22px;
     display: inline-block;
     position: relative;
   }
@@ -489,11 +483,11 @@
   }
 
   .headerIcon__message::before {
-    background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.2 5.25h7.6c3.1 0 4.95 1.85 4.95 4.95v3.1c0 3.1-1.85 4.95-4.95 4.95h-2.85l-3.55 2.9c-.5.4-1.2.05-1.2-.6v-2.3h-.35c-3.1 0-4.95-1.85-4.95-4.95v-3.1c0-3.1 1.85-4.95 4.95-4.95Z' stroke='%23D6D6D6' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg width='22' height='22' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cpath opacity='.4' d='M0 0h20v20H0z'%3E%3C/path%3E%3Cpath d='M6.83 15.75c.2-.23.53-.31.82-.2.81.3 1.7.45 2.6.45 3.77 0 6.75-2.7 6.75-6s-2.98-6-6.75-6S3.5 6.7 3.5 10c0 1.21.4 2.37 1.14 3.35.1.14.16.31.15.49-.04.76-.4 1.78-1.08 3.13 1.48-.11 2.5-.53 3.12-1.22ZM3.24 18.5a1.2 1.2 0 0 1-1.1-1.77A10.77 10.77 0 0 0 3.26 14 7 7 0 0 1 2 10c0-4.17 3.68-7.5 8.25-7.5S18.5 5.83 18.5 10s-3.68 7.5-8.25 7.5c-.92 0-1.81-.13-2.66-.4-1 .89-2.46 1.34-4.35 1.4Z' fill='%23D6D6D6' fill-rule='nonzero'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
   }
 
   .headerIcon__alert::before {
-    background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 4.1a4.8 4.8 0 0 0-4.8 4.8v2.55c0 .7-.24 1.37-.68 1.92l-1.25 1.57c-.36.45-.04 1.11.54 1.11h12.54c.58 0 .9-.66.54-1.11l-1.25-1.57a3.1 3.1 0 0 1-.68-1.92V8.9A4.8 4.8 0 0 0 12 4.1Z' stroke='%23D6D6D6' stroke-width='1.8' stroke-linejoin='round'/%3E%3Cpath d='M10.15 18.2a2 2 0 0 0 3.7 0' stroke='%23D6D6D6' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg fill='none' height='24' width='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 2.1c4.02 0 6.9 3.28 6.9 7.53v1.6c0 .23.2.53.72 1.08l.27.27c1.08 1.1 1.51 1.73 1.51 2.75 0 .44-.05.79-.27 1.2-.45.88-1.42 1.37-2.87 1.37h-1.9c-.64 2.33-2.14 3.6-4.36 3.6-2.25 0-3.75-1.3-4.37-3.67l.02.07H5.74c-1.5 0-2.47-.5-2.9-1.41-.2-.4-.24-.72-.24-1.16 0-1.02.43-1.65 1.51-2.75l.27-.27c.53-.55.72-.85.72-1.08v-1.6C5.1 5.38 7.99 2.1 12 2.1zm2.47 15.8H9.53c.46 1.25 1.25 1.8 2.47 1.8s2.01-.55 2.47-1.8zM12 3.9c-2.96 0-5.1 2.43-5.1 5.73v1.6c0 .85-.39 1.46-1.23 2.33l-.28.29c-.75.75-.99 1.11-.99 1.48 0 .19.01.29.06.38.1.22.43.39 1.28.39h12.52c.82 0 1.16-.17 1.28-.4.05-.1.06-.2.06-.37 0-.37-.24-.73-.99-1.48l-.28-.29c-.84-.87-1.23-1.48-1.23-2.33v-1.6c0-3.3-2.13-5.73-5.1-5.73z' fill='%23D6D6D6'%3E%3C/path%3E%3C/svg%3E");
   }
 
   .headerIcon__badge {
@@ -521,10 +515,16 @@
   }
 
   .accountUsername__name {
-    color: #d6d6d6;
+    color: #949494;
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 600;
     line-height: 1;
+    max-width: 140px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-left: 10px;
+    padding-right: 5px;
   }
 
   .accountUsername__avatar {
@@ -544,7 +544,7 @@
 
   .mobileDrawer {
     position: fixed;
-    inset: 50px 0 0;
+    inset: 0;
     pointer-events: none;
     z-index: 5699;
   }
@@ -560,6 +560,8 @@
     background: rgba(0, 0, 0, 0.22);
     opacity: 0;
     transition: opacity 0.18s ease;
+    cursor: pointer;
+    z-index: 1;
   }
 
   .mobileDrawer--open .mobileDrawer__backdrop {
@@ -571,7 +573,7 @@
     top: 0;
     left: 0;
     width: min(348px, calc(100vw - 42px));
-    height: calc(100dvh - 50px);
+    height: 100dvh;
     padding: 12px 0 16px;
     background: #1f1f1f;
     border-right: 1px solid rgba(255, 255, 255, 0.06);
@@ -579,6 +581,8 @@
     overflow-y: auto;
     transform: translateX(-100%);
     transition: transform 0.2s ease;
+    z-index: 10;
+    pointer-events: auto;
   }
 
   .mobileDrawer--open .mobileDrawer__panel {
@@ -689,7 +693,7 @@
     }
 
     .mobileBurger {
-      display: grid;
+      display: flex;
       margin-right: 4px;
     }
 
@@ -706,11 +710,27 @@
     }
 
     .visitorTabs {
-      gap: 14px;
+      gap: 20px;
+    }
+
+    .headerIcon {
+      width: 24px;
+      height: 24px;
+    }
+
+    .headerIcon__message,
+    .headerIcon__alert {
+      width: 24px;
+      height: 24px;
     }
 
     .accountUsername__name {
       display: none;
+    }
+
+    .accountUsername__avatar {
+      width: 32px;
+      height: 32px;
     }
   }
 
