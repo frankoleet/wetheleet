@@ -1,39 +1,35 @@
 # Forum Section Selector
 
-Страница выбора разделов форума на Svelte 5 и Vite.
+Отдельная страница для выбора раздела при создании темы.
 
-## Структура проекта
+Проект реализован на **Svelte 5 + Vite** и представляет собой адаптивный интерфейс выбора разделов форума с поиском, навигацией по категориям и переходом к созданию темы.
 
-```text
-forum-section-selector/
-|-- index.html
-|-- package.json
-|-- package-lock.json
-|-- svelte.config.js
-|-- vite.config.js
-|-- vercel.json
-`-- src/
-    |-- App.svelte
-    |-- global.css
-    |-- main.js
-    `-- lib/
-        |-- ForumTopbar.svelte
-        |-- ForumTreeNode.svelte
-        |-- MobileDrilldown.svelte
-        |-- SectionSelector.svelte
-        `-- data/
-            |-- forumTree.js
-            `-- forums.json
-```
+## Демо
 
-## Команды
+Открыть демо-версию проекта:
+**https://wetheleet.vercel.app**
+
+## Возможности
+
+- отдельная страница выбора раздела, а не модальное окно
+- адаптивный интерфейс для desktop и mobile
+- поиск по разделам форума
+- навигация по категориям и подразделам
+- отображение выбранного пути раздела
+- переход к созданию темы в выбранном разделе
+- сохранение последних выбранных разделов через `localStorage`
+- работа на Svelte-компонентах с клиентской логикой на JavaScript
+
+## Стек
+
+- **Svelte 5**
+- **Vite**
+- **JavaScript**
+- **HTML / CSS** 
+
+## Запуск проекта
+
+Установка зависимостей:
 
 ```bash
 npm install
-npm run dev
-npm run build
-```
-
-## Деплой
-
-Для Vercel уже добавлен `vercel.json`, а production-сборка создается в папке `dist/`.
