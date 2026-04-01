@@ -9,9 +9,6 @@
 Открыть демо-версию проекта:
 **https://wetheleet.vercel.app**
 
-Репозиторий:
-**https://github.com/frankoleet/wetheleet**  [oai_citation:2‡GitHub](https://github.com/frankoleet/wetheleet)
-
 ## Возможности
 
 - отдельная страница выбора раздела, а не модальное окно
