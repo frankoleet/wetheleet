@@ -187,7 +187,7 @@
           </button>
 
           <button class="accountUsername" type="button" aria-label={t.profile}>
-            <span class="accountUsername__name">nevergonnadie</span>
+            <span class="styleUserNickname style350">extasy</span>
             <span class="accountUsername__avatar">
               <img src={avatarSrc} alt="" loading="lazy" />
             </span>
@@ -514,17 +514,31 @@
     padding: 0;
   }
 
-  .accountUsername__name {
-    color: #949494;
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 1;
+  .styleUserNickname {
+    display: inline-block;
     max-width: 140px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     padding-left: 10px;
     padding-right: 5px;
+    font-family:
+      -apple-system, BlinkMacSystemFont, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 600;
+    text-align: left;
+    color: #aaa;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .style350 {
+    background: linear-gradient(90deg, #5c45ff, #feb5f2 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
   }
 
   .accountUsername__avatar {
@@ -724,7 +738,7 @@
       height: 24px;
     }
 
-    .accountUsername__name {
+    .styleUserNickname {
       display: none;
     }
 

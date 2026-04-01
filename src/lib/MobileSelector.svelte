@@ -1,5 +1,6 @@
 <script>
   import ForumTreeNode from './ForumTreeNode.svelte';
+  import { getCategorySidebarIcon } from './data/categorySidebarIcons.js';
 
   const t = {
     sections: '\u0420\u0430\u0437\u0434\u0435\u043b\u044b',
@@ -37,6 +38,9 @@
         class:mobile-categories__button--active={!searchQuery.trim() && Boolean(selectedId) && activeCategoryId === category.id}
         onclick={() => onPickCategory?.(category.id)}
       >
+        <span class="mobile-categories__icon" aria-hidden="true">
+          {@html getCategorySidebarIcon(category.title)}
+        </span>
         <strong>{category.title}</strong>
       </button>
     {/each}
@@ -115,8 +119,9 @@
     background: #242424;
     background-position: center;
     color: #d6d6d6;
-    display: grid;
-    place-items: center start;
+    display: flex;
+    align-items: center;
+    gap: 12px;
     text-align: left;
     font-size: 14px;
     position: relative;
@@ -152,10 +157,29 @@
     font-size: 14px;
     line-height: 1.2;
     font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 100%;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .mobile-categories__icon {
+    width: 24px;
+    height: 24px;
+    flex: 0 0 auto;
+    color: #6f7b74;
+    transition: color 0.16s ease, transform 0.16s ease;
+  }
+
+  .mobile-categories__icon :global(svg) {
+    width: 24px;
+    height: 24px;
+    display: block;
+  }
+
+  .mobile-categories button:hover .mobile-categories__icon,
+  .mobile-categories button:focus-visible .mobile-categories__icon,
+  .mobile-categories__button--active .mobile-categories__icon {
+    color: currentColor;
+    transform: translateX(1px);
   }
 
   .mobile-tree-panel {

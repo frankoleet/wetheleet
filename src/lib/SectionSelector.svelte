@@ -3,6 +3,7 @@
   import ForumTopbar from './ForumTopbar.svelte';
   import ForumTreeNode from './ForumTreeNode.svelte';
   import MobileSelector from './MobileSelector.svelte';
+  import { getCategorySidebarIcon } from './data/categorySidebarIcons.js';
   import {
     forumTree,
     getNode,
@@ -349,6 +350,9 @@
                 type="button"
                 onclick={() => pickCategory(category.id)}
               >
+                <span class="category-item__icon" aria-hidden="true">
+                  {@html getCategorySidebarIcon(category.title)}
+                </span>
                 <span class="category-item__copy">
                   <strong>{category.title}</strong>
                 </span>
@@ -368,6 +372,9 @@
                   type="button"
                   onclick={() => selectNode(category.id, { expand: true })}
                 >
+                  <span class="category-item__icon" aria-hidden="true">
+                    {@html getCategorySidebarIcon(category.title)}
+                  </span>
                   <span class="category-item__copy">
                     <strong>{category.title}</strong>
                   </span>
@@ -756,8 +763,9 @@
     border-radius: 8px;
     background: transparent;
     color: #d6d6d6;
-    display: grid;
-    place-items: center start;
+    display: flex;
+    align-items: center;
+    gap: 12px;
     text-align: left;
   }
 
@@ -772,11 +780,39 @@
     color: #2fd48a;
   }
 
+  .category-item__copy {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
   .category-item__copy strong {
+    display: block;
     font-size: 14px;
     line-height: 1.2;
     font-weight: 600;
     color: inherit;
+  }
+
+  .category-item__icon {
+    width: 24px;
+    height: 24px;
+    flex: 0 0 auto;
+    color: #6f7b74;
+    opacity: 0.95;
+    transition: color 0.16s ease, transform 0.16s ease;
+  }
+
+  .category-item__icon :global(svg) {
+    width: 24px;
+    height: 24px;
+    display: block;
+  }
+
+  .category-item:hover .category-item__icon,
+  .category-item:focus-visible .category-item__icon,
+  .category-item--active .category-item__icon {
+    color: currentColor;
+    transform: translateX(1px);
   }
 
   .tree-panel__lead {
