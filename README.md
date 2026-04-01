@@ -25,7 +25,7 @@
 - **Svelte 5**
 - **Vite**
 - **JavaScript**
-- **HTML / CSS**  [oai_citation:4‡GitHub](https://raw.githubusercontent.com/frankoleet/wetheleet/main/package.json)
+- **HTML / CSS** 
 
 ## Запуск проекта
 
